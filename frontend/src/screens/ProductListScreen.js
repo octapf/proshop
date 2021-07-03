@@ -6,11 +6,11 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button, Image } from 'react-bootstrap'
 import { listProducts } from '../actions/productActions'
 
-const ProductListScreen = ({ history }) => {
+const ProductListScreen = ({ history, match }) => {
 	const dispatch = useDispatch()
 
 	const { userInfo } = useSelector((state) => state.userLogin)
-	const { products } = useSelector((state) => state.productList)
+	const { loading, error, products } = useSelector((state) => state.productList)
 
 	useEffect(() => {
 		if (!userInfo || !userInfo.isAdmin) {
@@ -21,62 +21,89 @@ const ProductListScreen = ({ history }) => {
 	}, [history, products, dispatch, userInfo])
 
 	const handleDelete = (id) => {
-		//dispatch deleteProduct -p -ad
+		if (window.confirm('Are you sure?')) {
+			//dispatch deleteProduct -p -ad
+		}
 	}
 
+	const createProductHandler = () => {}
+
 	return (
-		<Table striped bordered hover responsive size='sm'>
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Name</th>
-					<th>Image</th>
-					<th>Brand</th>
-					<th>Category</th>
-					<th>Description</th>
-					<th>NumReviews</th>
-					<th>Rating</th>
-					<th>Price</th>
-					<th>Count In Stock</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				{products &&
-					products.map((product) => (
-						<tr>
-							<th>{product._id.slice(0, 7)}...</th>
-							<th>{product.name.slice(0, 10)}...</th>
-							<th>
-								<Image src={product.image} size='sm' fluid></Image>
-							</th>
-							<th>{product.brand}</th>
-							<th>{product.category}</th>
-							<th>{product.description.slice(0, 10)}...</th>
-							<th>{product.numReviews}</th>
-							<th>{product.rating}</th>
-							<th>${product.price}</th>
-							<th>{product.countInStock}</th>
-							<th>
-								<LinkContainer to={`/admin/product/${product._id}/edit`}>
-									<Button variant='outline-dark' className='btn-sm'>
-										<i className='fas fa-edit'></i>
+		<>
+			<h2 className='py-3'>Products</h2>
+			<Table striped bordered hover responsive size='sm'>
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Image</th>
+						<th>Brand</th>
+						<th>Category</th>
+						<th>Description</th>
+						<th>NumReviews</th>
+						<th>Rating</th>
+						<th>Price</th>
+						<th>Count In Stock</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{loading ? (
+						<Loader />
+					) : error ? (
+						<Message variant='danger'>{error}</Message>
+					) : !products ? (
+						<Message variant='danger'>
+							There are no products. Create One.
+						</Message>
+					) : (
+						products &&
+						products.map((product) => (
+							<tr>
+								<th>{product._id.slice(0, 7)}...</th>
+								<th>{product.name.slice(0, 10)}...</th>
+								<th>
+									<Image src={product.image} size='sm' fluid></Image>
+								</th>
+								<th>{product.brand}</th>
+								<th>{product.category}</th>
+								<th>{product.description.slice(0, 10)}...</th>
+								<th>{product.numReviews}</th>
+								<th>{product.rating}</th>
+								<th>${product.price}</th>
+								<th>{product.countInStock}</th>
+								<th>
+									<LinkContainer to={`/admin/product/${product._id}/edit`}>
+										<Button variant='outline-dark' className='btn-sm'>
+											<i className='fas fa-edit'></i>
+										</Button>
+									</LinkContainer>
+								</th>
+								<th>
+									<Button
+										variant='outline-danger'
+										className='btn-sm'
+										onClick={(e) => handleDelete(product._id)}
+									>
+										<i className='fas fa-trash'></i>
 									</Button>
-								</LinkContainer>
-							</th>
-							<th>
-								<Button
-									variant='outline-danger'
-									className='btn-sm'
-									onClick={(e) => handleDelete(product._id)}
-								>
-									<i className='fas fa-trash'></i>
-								</Button>
-							</th>
-						</tr>
-					))}
-			</tbody>
-		</Table>
+								</th>
+							</tr>
+						))
+					)}
+				</tbody>
+			</Table>
+			<LinkContainer to={`/admin/product/create`}>
+				<Button
+					type='button'
+					variant='outline-dark'
+					className='my-3'
+					onClick={createProductHandler}
+				>
+					<i className='fas fa-plus'></i> Create Product
+				</Button>
+			</LinkContainer>
+		</>
 	)
 }
 
