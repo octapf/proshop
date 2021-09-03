@@ -207,7 +207,7 @@ export const listUsers = () => async (dispatch, getState) => {
 			},
 		} = getState()
 
-		const response = await fetch('http://localhost:3000/api/users', {
+		const response = await fetch('/api/users', {
 			headers: { Authorization: `Bearer ${token}` },
 		})
 
@@ -235,7 +235,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
 			},
 		} = getState()
 
-		const response = await fetch(`http://localhost:3000/api/users/${id}`, {
+		const response = await fetch(`/api/users/${id}`, {
 			headers: { authorization: `Bearer ${token}` },
 			method: 'DELETE',
 		})
@@ -264,17 +264,14 @@ export const updateUser = (user) => async (dispatch, getState) => {
 			},
 		} = getState()
 
-		const response = await fetch(
-			`http://localhost:3000/api/users/${user._id}`,
-			{
-				headers: {
-					authorization: `Bearer ${token}`,
-					'Content-Type': 'application/json',
-				},
-				method: 'PUT',
-				body: JSON.stringify(user),
-			}
-		)
+		const response = await fetch(`/api/users/${user._id}`, {
+			headers: {
+				authorization: `Bearer ${token}`,
+				'Content-Type': 'application/json',
+			},
+			method: 'PUT',
+			body: JSON.stringify(user),
+		})
 
 		const data = await response.json()
 
@@ -300,7 +297,7 @@ export const getUser = (id) => async (dispatch, getState) => {
 			},
 		} = getState()
 
-		const response = await fetch(`http://localhost:3000/api/users/${id}`, {
+		const response = await fetch(`/api/users/${id}`, {
 			headers: {
 				authorization: `Bearer ${token}`,
 				'Content-Type': 'application/json',

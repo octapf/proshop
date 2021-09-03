@@ -5,14 +5,11 @@ import FormContainer from '../components/FormContainer'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { savePaymentMethod } from '../actions/cartActions'
 
-
 const PaymentScreen = ({ history }) => {
 	const { shippingAddress } = useSelector((state) => state.cart)
-	const { userInfo } = useSelector(state => state.userLogin)
+	const { userInfo } = useSelector((state) => state.userLogin)
 
-
-
-	if (!userInfo) {
+	if (!userInfo.name) {
 		history.push('/login')
 	} else if (!shippingAddress) {
 		history.push('/shipping')
@@ -58,7 +55,7 @@ const PaymentScreen = ({ history }) => {
 					</Col>
 				</Form.Group>
 
-				<Button type='submit' variant='primary'>
+				<Button type='submit' variant='outline-dark'>
 					Continue
 				</Button>
 			</Form>

@@ -29,7 +29,7 @@ const ProfileScreen = ({ match, history }) => {
 	} = useSelector((state) => state.orderListMy)
 
 	useEffect(() => {
-		if (!userInfo) {
+		if (!userInfo.name) {
 			history.push('/login')
 		} else {
 			if (!user.name) {
@@ -92,7 +92,7 @@ const ProfileScreen = ({ match, history }) => {
 							onChange={(e) => setConfirmPassword(e.target.value)}
 						/>
 					</Form.Group>
-					<Button className='my-3' type='submit' variant='primary'>
+					<Button className='my-3' type='submit' variant='outline-dark'>
 						Update
 					</Button>
 				</Form>
@@ -144,8 +144,8 @@ const ProfileScreen = ({ match, history }) => {
 									</td>
 									<td>
 										<LinkContainer to={`/order/${order._id}`}>
-											<Button className='btn-sm' variant='light'>
-												Details
+											<Button className='btn-sm' variant='outline-dark'>
+												Info
 											</Button>
 										</LinkContainer>
 									</td>

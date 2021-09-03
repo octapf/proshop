@@ -1,7 +1,5 @@
 import asyncHandler from 'express-async-handler'
 import Order from '../models/orderModel.js'
-import User from '../models/userModel.js'
-import Product from '../models/productModel.js'
 
 // @desc Get logged in user orders
 // @route GET  /api/orders/myorders
@@ -108,5 +106,43 @@ export const addOrderItems = asyncHandler(async (req, res) => {
 		console.error(error)
 		res.status(400)
 		throw new Error('Bad request')
+	}
+})
+
+// @desc Get all orders
+// @route GET /api/orders
+// @access Private/Admin
+
+export const getOrders = asyncHandler(async (req, res) => {
+	const orders = await Order.find({}).populate('user', 'id name')
+
+	if (orders) {
+		res.json(orders)
+	} else {
+		res.status(404)
+		throw new Error('No orders found')
+	}
+})
+
+// @desc Update order to delivered
+// @route PUT  /api/orders/:id/deliver
+// @access Private/Admin
+
+export const updateOrderToDelivered = asyncHandler(async (req, res) => {
+	try {
+		const order = await Order.findById(req.params.id)
+
+		if (order) {
+			order.isDelivered = true
+			order.deliveredAt = Date.now()
+
+			const updatedOrder = await order.save()
+
+			res.json(updatedOrder)
+		}
+	} catch (error) {
+		console.error(error)
+		res.status(404)
+		throw new Error(`Order not found with id: ${req.params.id}`)
 	}
 })

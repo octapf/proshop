@@ -16,9 +16,9 @@ const PlaceOrderScreen = ({ history }) => {
 		(state) => state.orderCreate
 	)
 
-	const { userInfo } = useSelector(state => state.userLogin)
+	const { userInfo } = useSelector((state) => state.userLogin)
 
-	if (!userInfo) {
+	if (!userInfo.name) {
 		history.push('/login')
 	} else if (!cart.paymentMethod) {
 		history.push('/payment')
@@ -49,13 +49,11 @@ const PlaceOrderScreen = ({ history }) => {
 		Number(cart.taxPrice)
 	).toFixed(2)
 
-
-
 	useEffect(() => {
 		if (success) {
 			history.push(`/order/${order._id}`)
 		}
-	}, [history, success])
+	}, [history, success, order])
 
 	const placeOrderHandler = () => {
 		dispatch(createOrder({ ...cart, orderItems: cart.cartItems }))
@@ -64,8 +62,9 @@ const PlaceOrderScreen = ({ history }) => {
 	return (
 		<>
 			<CheckoutSteps step1 step2 step3 step4 />
+			<h1 className='mx-3 px-1'>Place Order</h1>
 			<Row>
-				<Col md={8}>
+				<Col md={9}>
 					<ListGroup variant='flush'>
 						<ListGroup.Item>
 							<h2>Shipping</h2>
@@ -117,7 +116,7 @@ const PlaceOrderScreen = ({ history }) => {
 												</Col>
 											</Row>
 											<Row>
-												<Col className='py-3'>{`Product id: ${item.product}`}</Col>
+												<Col className='py-3'>{`id ${item.product}`}</Col>
 											</Row>
 										</ListGroup.Item>
 									))}
@@ -126,9 +125,9 @@ const PlaceOrderScreen = ({ history }) => {
 						</ListGroup.Item>
 					</ListGroup>
 				</Col>
-				<Col md={4}>
-					<Card>
-						<ListGroup>
+				<Col md={3}>
+					<Card border='light' className='mx-4'>
+						<ListGroup variant='flush'>
 							<ListGroup.Item>
 								<h2>Order Summary</h2>
 							</ListGroup.Item>
@@ -163,6 +162,7 @@ const PlaceOrderScreen = ({ history }) => {
 								<Button
 									type='button'
 									className='btn-block'
+									variant='outline-primary'
 									disabled={cart.cartItems.length === 0}
 									onClick={placeOrderHandler}
 								>

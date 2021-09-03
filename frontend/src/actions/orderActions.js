@@ -3,14 +3,12 @@ import * as actions from '../constants/orderConstants'
 export const createOrder = (order) => async (dispatch, getState) => {
 	try {
 		dispatch({
-			type: actions.ORDER_CREATE_REQUEST
+			type: actions.ORDER_CREATE_REQUEST,
 		})
 
 		const {
 			userLogin: {
-				userInfo: {
-					token
-				},
+				userInfo: { token },
 			},
 		} = getState()
 
@@ -27,14 +25,15 @@ export const createOrder = (order) => async (dispatch, getState) => {
 
 		dispatch({
 			type: actions.ORDER_CREATE_SUCCESS,
-			payload: newOrder
+			payload: newOrder,
 		})
 	} catch (error) {
 		dispatch({
 			type: actions.ORDER_CREATE_FAIL,
-			error: error.response && error.response.data.message ?
-				error.response.data.message :
-				error.message,
+			error:
+				error.response && error.response.data.message
+					? error.response.data.message
+					: error.message,
 		})
 	}
 }
@@ -42,22 +41,20 @@ export const createOrder = (order) => async (dispatch, getState) => {
 export const getOrderDetails = (orderId) => async (dispatch, getState) => {
 	try {
 		dispatch({
-			type: actions.ORDER_DETAILS_REQUEST
+			type: actions.ORDER_DETAILS_REQUEST,
 		})
 
 		//fetch the order details from the backend end point /api/orders/:id
 
 		const {
 			userLogin: {
-				userInfo: {
-					token
-				},
+				userInfo: { token },
 			},
 		} = getState()
 
 		const config = {
 			headers: {
-				authorization: `Bearer ${token}`
+				authorization: `Bearer ${token}`,
 			},
 		}
 
@@ -67,14 +64,15 @@ export const getOrderDetails = (orderId) => async (dispatch, getState) => {
 
 		dispatch({
 			type: actions.ORDER_DETAILS_SUCCESS,
-			payload: data
+			payload: data,
 		})
 	} catch (error) {
 		dispatch({
 			type: actions.ORDER_DETAILS_FAIL,
-			payload: error.response && error.response.data.message ?
-				error.response.data.message :
-				error.message,
+			payload:
+				error.response && error.response.data.message
+					? error.response.data.message
+					: error.message,
 		})
 	}
 }
@@ -82,14 +80,12 @@ export const getOrderDetails = (orderId) => async (dispatch, getState) => {
 export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
 	try {
 		dispatch({
-			type: actions.ORDER_PAY_REQUEST
+			type: actions.ORDER_PAY_REQUEST,
 		})
 
 		const {
 			userLogin: {
-				userInfo: {
-					token
-				},
+				userInfo: { token },
 			},
 		} = getState()
 
@@ -108,14 +104,46 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
 
 		dispatch({
 			type: actions.ORDER_PAY_SUCCESS,
-			payload: data
+			payload: data,
 		})
 	} catch (error) {
 		dispatch({
 			type: actions.ORDER_PAY_FAIL,
-			payload: error.response && error.response.data.message ?
-				error.response.data.message :
-				error.message,
+			payload:
+				error.response && error.response.data.message
+					? error.response.data.message
+					: error.message,
+		})
+	}
+}
+
+export const deliverOrder = (id) => async (dispatch, getState) => {
+	try {
+		dispatch({ type: actions.ORDER_DELIVER_REQUEST })
+
+		const {
+			userLogin: {
+				userInfo: { token },
+			},
+		} = getState()
+
+		const response = await fetch(`/api/orders/${id}/deliver`, {
+			headers: {
+				authorization: `Bearer ${token}`,
+			},
+			method: 'PUT',
+		})
+
+		const data = await response.json()
+
+		dispatch({ type: actions.ORDER_DELIVER_SUCCESS, payload: data })
+	} catch (error) {
+		dispatch({
+			type: actions.ORDER_DELIVER_FAIL,
+			payload:
+				error.response && error.response.data.message
+					? error.response.data.message
+					: error.message,
 		})
 	}
 }
@@ -123,20 +151,18 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
 export const listMyOrders = () => async (dispatch, getState) => {
 	try {
 		dispatch({
-			type: actions.ORDER_LIST_MY_REQUEST
+			type: actions.ORDER_LIST_MY_REQUEST,
 		})
 
 		const {
 			userLogin: {
-				userInfo: {
-					token
-				},
+				userInfo: { token },
 			},
 		} = getState()
 
 		const response = await fetch('/api/orders/myorders', {
 			headers: {
-				authorization: `Bearer ${token}`
+				authorization: `Bearer ${token}`,
 			},
 		})
 
@@ -150,15 +176,44 @@ export const listMyOrders = () => async (dispatch, getState) => {
 		} else {
 			dispatch({
 				type: actions.ORDER_LIST_MY_SUCCESS,
-				payload: orders
+				payload: orders,
 			})
 		}
 	} catch (error) {
 		dispatch({
 			type: actions.ORDER_LIST_MY_FAIL,
-			payload: error.response && error.response.data.message ?
-				error.response.data.message :
-				error.message,
+			payload:
+				error.response && error.response.data.message
+					? error.response.data.message
+					: error.message,
+		})
+	}
+}
+
+export const listOrders = () => async (dispatch, getState) => {
+	try {
+		dispatch({ type: actions.ORDER_LIST_REQUEST })
+
+		const {
+			userLogin: {
+				userInfo: { token },
+			},
+		} = getState()
+
+		const response = await fetch('/api/orders', {
+			headers: { authorization: `Bearer ${token}` },
+		})
+
+		const data = await response.json()
+
+		dispatch({ type: actions.ORDER_LIST_SUCCESS, payload: data })
+	} catch (error) {
+		dispatch({
+			type: actions.ORDER_LIST_FAIL,
+			payload:
+				error.response && error.response.data.message
+					? error.response.data.message
+					: error.message,
 		})
 	}
 }

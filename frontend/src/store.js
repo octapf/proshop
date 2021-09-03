@@ -4,6 +4,11 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import {
 	productListReducer,
 	getProductReducer,
+	productCreateReducer,
+	productDeleteReducer,
+	productUpdateReducer,
+	productReviewCreateReducer,
+	productTopRatedReducer,
 } from './reducers/productReducers'
 import { cartReducer } from './reducers/cartReducers'
 import {
@@ -21,12 +26,19 @@ import {
 	orderCreateReducer,
 	orderDetailsReducer,
 	orderPayReducer,
+	orderDeliverReducer,
 	orderListMyReducer,
+	orderListReducer,
 } from './reducers/orderReducers'
 
 const reducer = combineReducers({
 	productList: productListReducer,
 	getProduct: getProductReducer,
+	productTopRated: productTopRatedReducer,
+	productCreate: productCreateReducer,
+	productDelete: productDeleteReducer,
+	productUpdate: productUpdateReducer,
+	productReviewCreate: productReviewCreateReducer,
 	cart: cartReducer,
 	userLogin: userLoginReducer,
 	userRegister: userRegisterReducer,
@@ -39,7 +51,9 @@ const reducer = combineReducers({
 	orderCreate: orderCreateReducer,
 	orderDetails: orderDetailsReducer,
 	orderPay: orderPayReducer,
+	orderDeliver: orderDeliverReducer,
 	orderListMy: orderListMyReducer,
+	orderList: orderListReducer,
 })
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
@@ -48,7 +62,7 @@ const cartItemsFromStorage = localStorage.getItem('cartItems')
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
 	? JSON.parse(localStorage.getItem('userInfo'))
-	: null
+	: {}
 
 const shippingAddressFromStorage = localStorage.getItem('shippingAddress')
 	? JSON.parse(localStorage.getItem('shippingAddress'))

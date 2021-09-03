@@ -23,7 +23,7 @@ const RegisterScreen = ({ location, history }) => {
 	const redirect = location.search ? location.search.split('=')[1] : null
 
 	useEffect(() => {
-		if (userInfo) {
+		if (userInfo.name) {
 			history.push(redirect)
 		}
 	}, [redirect, history, userInfo])
@@ -40,7 +40,7 @@ const RegisterScreen = ({ location, history }) => {
 
 	return (
 		<FormContainer>
-			<h1>Sing Up</h1>
+			<h1>Join now</h1>
 
 			<Form onSubmit={submitHandler}>
 				<Form.Group controlId='name'>
@@ -92,7 +92,7 @@ const RegisterScreen = ({ location, history }) => {
 				<Col>
 					Have an account?{' '}
 					<Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
-						Login
+						Sign In
 					</Link>
 				</Col>
 			</Row>

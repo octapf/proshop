@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button } from 'react-bootstrap'
-import { getUser, updateUser } from '../actions/userActions'
+import { getUser, login, updateUser } from '../actions/userActions'
 import { Link } from 'react-router-dom'
 import FormContainer from '../components/FormContainer'
 import Loader from '../components/Loader'
@@ -30,7 +30,7 @@ const UserEditScreen = ({ history, match }) => {
 	} = useSelector((state) => state.userUpdate)
 
 	useEffect(() => {
-		if (!userInfo || !userInfo.isAdmin) {
+		if (!userInfo.name || !userInfo.isAdmin) {
 			history.push('/login')
 		} else if (!user || user._id !== userId) {
 			dispatch(getUser(userId))
@@ -39,7 +39,7 @@ const UserEditScreen = ({ history, match }) => {
 			setEmail(user.email)
 			setIsAdmin(user.isAdmin)
 		}
-	}, [dispatch, user, userId, history])
+	}, [dispatch, user, userId, history, userInfo])
 
 	const submitHandler = (e) => {
 		e.preventDefault()

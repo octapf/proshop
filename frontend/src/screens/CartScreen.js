@@ -70,7 +70,8 @@ const CartScreen = ({ match, location, history }) => {
 									<Col md={2}>
 										<Button
 											type='button'
-											variant='light'
+											variant='outline-dark'
+											className='btn-sm'
 											onClick={() => removeFromCartHandler(item.product)}
 										>
 											<i className='fas fa-trash'></i>
@@ -100,6 +101,7 @@ const CartScreen = ({ match, location, history }) => {
 							<Button
 								type='button'
 								className='btn-block'
+								variant='outline-dark'
 								disabled={cartItems.length === 0}
 								onClick={() => checkoutHandler()}
 							>

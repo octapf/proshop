@@ -12,6 +12,8 @@ import {
 } from '../controllers/userController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
 
+// @route /api/users
+
 router.route('/').get(protect, admin, getUsers).post(registerUser)
 
 router.route('/login').post(authUser)

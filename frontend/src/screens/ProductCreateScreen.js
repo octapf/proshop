@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form, Button, Image, Table } from 'react-bootstrap'
-import Loader from '../components/Loader'
+import { Form, Button, Table, Image } from 'react-bootstrap'
 import Message from '../components/Message'
-import { Link } from 'react-router-dom'
+import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import { getProduct, updateProduct } from '../actions/productActions'
-import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
+import { createProduct } from '../actions/productActions'
+import { Link } from 'react-router-dom'
+import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
 
-const ProductEditScreen = ({ history, match }) => {
-	const productId = match.params.id
-
+const ProductCreateScreen = ({ history }) => {
 	const dispatch = useDispatch()
 
-	const [id, setId] = useState('')
 	const [name, setName] = useState('')
-	const [image, setImage] = useState('')
+	const [image, setImage] = useState('/images/phone.jpg')
 	const [brand, setBrand] = useState('')
 	const [category, setCategory] = useState('')
 	const [description, setDescription] = useState('')
-	const [reviews, setReviews] = useState([])
 	const [rating, setRating] = useState(0)
 	const [numReviews, setNumReviews] = useState(0)
 	const [price, setPrice] = useState(0)
@@ -27,38 +23,17 @@ const ProductEditScreen = ({ history, match }) => {
 	const [uploading, setUploading] = useState(false)
 
 	const { userInfo } = useSelector((state) => state.userLogin)
-	const { product, loading, error } = useSelector((state) => state.getProduct)
-
-	const {
-		loading: loadingProductUpdate,
-		error: errorProductUpdate,
-		success: successProductUpdate,
-	} = useSelector((state) => state.productUpdate)
+	const { error, success, loading } = useSelector(
+		(state) => state.productCreate
+	)
 
 	useEffect(() => {
-		if (!userInfo.name || !userInfo.isAdmin) {
+		if (!userInfo.name) {
 			history.push('/login')
-		} else if (
-			!product ||
-			productId !== product._id ||
-			product === undefined ||
-			!product.name
-		) {
-			dispatch(getProduct(productId))
-		} else {
-			setId(product._id)
-			setName(product.name)
-			setImage(product.image)
-			setBrand(product.brand)
-			setCategory(product.category)
-			setDescription(product.description)
-			setReviews(product.reviews)
-			setRating(product.rating)
-			setNumReviews(product.numReviews)
-			setPrice(product.price)
-			setCountInStock(product.countInStock)
+		} else if (!userInfo.isAdmin) {
+			history.push('/')
 		}
-	}, [dispatch, history, userInfo, productId, product])
+	}, [userInfo, history])
 
 	const uploadFileHandler = async (e) => {
 		const file = e.target.files[0]
@@ -84,45 +59,39 @@ const ProductEditScreen = ({ history, match }) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault()
-
 		dispatch(
-			updateProduct({
-				_id: id,
+			createProduct({
 				user: userInfo._id,
-				description,
-				category,
-				brand,
-				image,
 				name,
+				image,
+				brand,
+				category,
+				description,
 				rating,
-				price,
 				numReviews,
+				price,
 				countInStock,
 			})
 		)
-
 		setTimeout(() => {
-			dispatch({ type: PRODUCT_UPDATE_RESET })
+			dispatch({ type: PRODUCT_CREATE_RESET })
 		}, 4000)
 	}
-
 	return (
 		<>
-			<Link to={`/admin/productlist`} className='btn btn-light btn-sm py-3'>
+			<Link to='/admin/productlist' className='btn btn-light btn-sm py-3'>
 				Go Back
 			</Link>
-
 			<FormContainer>
-				<h2>Edit Product</h2>
+				<h2 className='my-3'>Create Product</h2>
 				{loading ? (
 					<Loader />
-				) : error ? (
-					<Message variant='danger'>{error}</Message>
 				) : (
 					<Form onSubmit={submitHandler}>
 						<Form.Group controlId='image'>
 							<Form.Label>Image</Form.Label>
 							<Image src={image} alt={name} fluid />
+
 							<Form.Control
 								className='my-3'
 								type='text'
@@ -133,65 +102,56 @@ const ProductEditScreen = ({ history, match }) => {
 							></Form.Control>
 							<Form.File
 								id='image-file'
-								label='Choose an image'
+								label='Choose File'
 								custom
 								onChange={uploadFileHandler}
 							></Form.File>
 							{uploading && <Loader />}
 						</Form.Group>
 
-						<Form.Group controlId='id'>
-							<Form.Label>Id</Form.Label>
-							<Form.Control
-								disabled
-								as='input'
-								type='text'
-								onChange={(e) => setId(e.target.value)}
-								value={id}
-							/>
-						</Form.Group>
-
 						<Form.Group controlId='name'>
 							<Form.Label>Name</Form.Label>
 							<Form.Control
-								as='input'
 								type='text'
+								required
 								onChange={(e) => setName(e.target.value)}
 								value={name}
-							/>
+								placeholder='Enter name'
+							></Form.Control>
 						</Form.Group>
 
 						<Form.Group controlId='brand'>
 							<Form.Label>Brand</Form.Label>
 							<Form.Control
-								as='input'
 								type='text'
+								required
 								onChange={(e) => setBrand(e.target.value)}
 								value={brand}
-							/>
+								placeholder='Enter brand'
+							></Form.Control>
 						</Form.Group>
 
 						<Form.Group controlId='category'>
 							<Form.Label>Category</Form.Label>
 							<Form.Control
-								as='input'
 								type='text'
+								required
 								onChange={(e) => setCategory(e.target.value)}
 								value={category}
-							/>
+								placeholder='Enter category'
+							></Form.Control>
 						</Form.Group>
 
 						<Form.Group controlId='description'>
 							<Form.Label>Description</Form.Label>
 							<Form.Control
 								as='textarea'
-								rows={description.length / 50}
-								style={{ resize: 'none', outline: 'none' }}
+								required
 								onChange={(e) => setDescription(e.target.value)}
 								value={description}
-							/>
+								placeholder='Enter description'
+							></Form.Control>
 						</Form.Group>
-
 						<Table bordered size='sm'>
 							<thead>
 								<tr>
@@ -232,7 +192,7 @@ const ProductEditScreen = ({ history, match }) => {
 									</td>
 									<td>
 										<Form.Control
-											type='number'
+											type='text'
 											required
 											onChange={(e) => setCountInStock(e.target.value)}
 											value={countInStock}
@@ -243,52 +203,26 @@ const ProductEditScreen = ({ history, match }) => {
 							</tbody>
 						</Table>
 
-						<Form.Group controlId='reviews'>
-							<Form.Label>Reviews</Form.Label>
-
-							<Table bordered striped hover>
-								<thead>
-									<tr>
-										<td>Name</td>
-										<td>Rating</td>
-										<td>Comment</td>
-									</tr>
-								</thead>
-								<tbody>
-									{product &&
-										product.reviews.map((review, index) => (
-											<tr key={index}>
-												<td>{review.name}</td>
-												<td>{review.rating}</td>
-												<td>{review.comment}</td>
-											</tr>
-										))}
-								</tbody>
-							</Table>
-						</Form.Group>
-
-						<Button type='submit' variant='outline-dark' className='my-3'>
-							Update product
+						<Button
+							type='submit'
+							variant='outline-dark'
+							className='btn-sm mb-3'
+						>
+							Create Product
 						</Button>
-						{loadingProductUpdate ? (
-							<Loader />
-						) : errorProductUpdate ? (
-							<Message variant='danger'>{errorProductUpdate}</Message>
+						{error ? (
+							<Message variant='danger'>{error}</Message>
 						) : (
-							successProductUpdate && (
-								<Message className='float-right' variant='success'>
-									Product Updated
-								</Message>
-							)
+							success && <Message variant='success'>Product Created</Message>
 						)}
 					</Form>
 				)}
 			</FormContainer>
-			<Link to={`/admin/productlist`} className='btn btn-light btn-sm py-3'>
+			<Link to='/admin/productlist' className='btn btn-light btn-sm py-3'>
 				Go Back
 			</Link>
 		</>
 	)
 }
 
-export default ProductEditScreen
+export default ProductCreateScreen

@@ -7,14 +7,14 @@ import CheckoutSteps from '../components/CheckoutSteps'
 
 const ShippingScreen = ({ history }) => {
 	const { shippingAddress } = useSelector((state) => state.cart)
-	const { userInfo } = useSelector(state => state.userLogin)
+	const { userInfo } = useSelector((state) => state.userLogin)
 
 	const [address, setAddress] = useState(shippingAddress.address)
 	const [city, setCity] = useState(shippingAddress.city)
 	const [postalCode, setPostalCode] = useState(shippingAddress.postalCode)
 	const [country, setCountry] = useState(shippingAddress.country)
 
-	if (!userInfo) {
+	if (!userInfo.name) {
 		history.push('/login')
 	}
 
@@ -70,7 +70,7 @@ const ShippingScreen = ({ history }) => {
 						required
 					/>
 				</Form.Group>
-				<Button type='submit' variant='primary'>
+				<Button type='submit' variant='outline-dark'>
 					Continue
 				</Button>
 			</Form>
