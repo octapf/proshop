@@ -109,7 +109,8 @@ const PlaceOrderScreen = ({ history }) => {
 													</Link>
 												</Col>
 												<Col md={4}>
-													{item.qty} x ${item.price} = ${item.qty * item.price}
+													{item.qty} x ${item.price.toFixed(2)} = $
+													{(item.qty * item.price).toFixed(2)}
 												</Col>
 												<Col md={1}>
 													{item.countInStock ? 'In Stock' : 'Out Of Stock'}
