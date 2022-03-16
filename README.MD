@@ -47,3 +47,19 @@ Checkout process (shipping, payment method, etc) 🛒
 PayPal / credit card integration 🤑
 
 Custom database seeder script
+
+# Future features
+
+Implement Typescript (front & back) for a more robust code and less prone to errors
+
+Document each project's functionality with /* ! description - * user - dd/mm/yyyy - params - etc */
+
+Include RegEx validation for each input field in DB's models
+
+Define interface for each DTO
+
+Implement a debugger to track and monitor the app functionality
+
+Add unit testing
+
+Migrate app from monolith to microservices
