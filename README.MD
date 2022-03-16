@@ -1,10 +1,10 @@
-# octavio-frangipani 👨‍💻
+# Octavio-Frangipani 👨‍💻
 
 Proshop e-commerce website
 
 # Quick intro to the project
 
-Develop a full transactional e-commerce website
+Develop a full transactional e-commerce website 💲
 
 Implement MERN stack
 
@@ -14,11 +14,11 @@ BEND > Nodejs/ExpressJs with MongoDB/Mongoose ODM
 
 Use of JWT authentication
 
-Implement pagination
+Implement pagination 📄
 
-Integrating the PayPal/Strive APIs
+Integrating the PayPal/Strive APIs 💸
 
-Project deployment to Heroku
+Project deployment to Heroku 📤
 
 # Functionalities 🦾
 
@@ -28,7 +28,7 @@ Product reviews 💬 and ratings 🌟
 
 Top products carousel
 
-Product pagination 📋
+Product pagination 📄
 
 Product search feature 🕵️‍♀️
 
@@ -48,18 +48,18 @@ PayPal / credit card integration 🤑
 
 Custom database seeder script
 
-# Future features
+# Upcoming features
 
-Implement Typescript (front & back) for a more robust code and less prone to errors
+Implement Typescript 💙 (front & back) for a more robust code and less prone to errors ❌
 
-Document each project's functionality with /* ! description - * user - dd/mm/yyyy - params - etc */
+Document each project's functionality with /* ! description - * user - dd/mm/yyyy - params - etc */ 📚
 
-Include RegEx validation for each input field in DB's models
+Include RegEx validation for each input field in DB's models 🙅‍♂️
 
-Define interface for each DTO
+Define interface for each DTO 📖
 
-Implement a debugger to track and monitor the app functionality
+Implement a debugger to track and monitor the app functionality 💻
 
-Add unit testing
+Add unit testing 🧪
 
-Migrate app from monolith to microservices
+Migrate app from monolith to microservices 👨‍👨‍👦‍👦
