@@ -62,4 +62,6 @@ Implement a debugger to track and monitor the app functionality 💻
 
 Add unit testing 🧪
 
+Dockerize the app 🐳
+
 Migrate app from monolith to microservices 👨‍👨‍👦‍👦
