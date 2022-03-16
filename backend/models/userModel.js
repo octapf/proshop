@@ -6,6 +6,12 @@ const userSchema = mongoose.Schema(
 		name: {
 			type: String,
 			required: true,
+			validate: {
+				validator: function () {
+					return true
+				},
+				message: (props) => `${props.value} is not a valid Street city`,
+			},
 		},
 		email: {
 			type: String,

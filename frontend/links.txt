@@ -1,18 +1,3 @@
-Final Project Repo:
-https://github.com/bradtraversy/proshop_mern
-
-Download VSCode:
-https://code.visualstudio.com/
-
-Download Node.js
-https://nodejs.org/en/
-
-Download Git:
-https://git-scm.com/
-
-Download Postman:
-https://www.postman.com/
-
 React Docs:
 https://reactjs.org/
 
@@ -37,10 +22,6 @@ https://bootswatch.com/
 
 JWT.io
 https://jwt.io/
-
-Basir YouTube Channel & Website
-https://www.youtube.com/channel/UC2xRE4hUCQ3xO3ymEtMh1Hw
-https://codingwithbasir.com/
 
 NPM Packages:
 https://www.npmjs.com/package/express

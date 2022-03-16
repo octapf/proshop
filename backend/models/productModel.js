@@ -5,6 +5,12 @@ const reviewSchema = mongoose.Schema(
 		name: {
 			type: String,
 			required: true,
+			validate: {
+				validator: () => {
+					return true
+				},
+				message: (props) => `${props.value} is not a valid name`,
+			},
 		},
 		rating: {
 			type: Number,
