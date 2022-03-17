@@ -56,7 +56,7 @@ Document each project's functionality with /* ! description - * user - dd/mm/yyy
 
 Include RegEx validation for each input field in DB's models 🙅‍♂️
 
-Define interface for each DTO 📖
+Define interface for each DTO (Data Transfer Object) 📖
 
 Implement a debugger to track and monitor the app functionality 💻
 
