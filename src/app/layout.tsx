@@ -30,7 +30,7 @@ export default function RootLayout({
 			crossOrigin="anonymous"
 		/>
       </head>
-      <body className={inter.className}>
+      <body className={inter.className} suppressHydrationWarning={true}>
         <ReduxProvider>
             <Header />
             <main className="py-3">

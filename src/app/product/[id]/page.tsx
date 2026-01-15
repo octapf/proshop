@@ -41,11 +41,11 @@ const ProductScreen = () => {
 	}
 
 	return (
-		<>
-			<LinkNext href='/' passHref legacyBehavior>
-                <a className='btn btn-light my-3'>Go Back</a>
+        <>
+            <LinkNext href='/' className='btn btn-light my-3'>
+                Go Back
             </LinkNext>
-			{loading ? (
+            {loading ? (
 				<Loader />
 			) : error ? (
 				<Message variant='danger'>{error}</Message>
@@ -133,7 +133,7 @@ const ProductScreen = () => {
                 </>
             )}
         </>
-    )
+    );
 }
 
 export default ProductScreen

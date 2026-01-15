@@ -6,13 +6,11 @@ import Link from 'next/link'
 
 const CheckoutSteps = ({ step1, step2, step3, step4 }: any) => {
 	return (
-		<Nav className='justify-content-md-center mb-4'>
-			<Row>
+        <Nav className='justify-content-md-center mb-4'>
+            <Row>
 				<Nav.Item>
 					{step1 ? (
-						<Link href='/login' legacyBehavior passHref>
-							<Nav.Link>Sign In</Nav.Link>
-						</Link>
+						<Nav.Link as={Link} href='/login'>Sign In</Nav.Link>
 					) : (
 						<Nav.Link disabled>Sign In</Nav.Link>
 					)}
@@ -20,9 +18,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }: any) => {
 
 				<Nav.Item>
 					{step2 ? (
-						<Link href='/shipping' legacyBehavior passHref>
-							<Nav.Link>Shipping</Nav.Link>
-						</Link>
+						<Nav.Link as={Link} href='/shipping'>Shipping</Nav.Link>
 					) : (
 						<Nav.Link disabled>Shipping</Nav.Link>
 					)}
@@ -30,9 +26,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }: any) => {
 
 				<Nav.Item>
 					{step3 ? (
-						<Link href='/payment' legacyBehavior passHref>
-							<Nav.Link>Payment</Nav.Link>
-						</Link>
+						<Nav.Link as={Link} href='/payment'>Payment</Nav.Link>
 					) : (
 						<Nav.Link disabled>Payment</Nav.Link>
 					)}
@@ -40,16 +34,14 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }: any) => {
 
 				<Nav.Item>
 					{step4 ? (
-						<Link href='/placeorder' legacyBehavior passHref>
-							<Nav.Link>Place Order</Nav.Link>
-						</Link>
+						<Nav.Link as={Link} href='/placeorder'>Place Order</Nav.Link>
 					) : (
 						<Nav.Link disabled>Place Order</Nav.Link>
 					)}
 				</Nav.Item>
 			</Row>
-		</Nav>
-	)
+        </Nav>
+    );
 }
 
 export default CheckoutSteps

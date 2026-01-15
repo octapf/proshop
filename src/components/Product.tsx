@@ -7,19 +7,18 @@ import Rating from './Rating'
 
 const Product = ({ product }: any) => {
 	return (
-		<Card className='my-3 p-3 rounded'>
-			<Link href={`/product/${product._id}`} passHref>
+        <Card className='my-3 p-3 rounded'>
+            <Link href={`/product/${product._id}`}>
 				<Card.Img src={product.image} variant='top' />
 			</Link>
+            <Card.Body>
+				<Link href={`/product/${product._id}`} style={{ textDecoration: 'none' }}>
 
-			<Card.Body>
-				<Link href={`/product/${product._id}`} passHref legacyBehavior>
-                    <a style={{ textDecoration: 'none' }}>
-    					<Card.Title as='div'>
-	    					<strong>{product.name}</strong>
-		    			</Card.Title>
-                    </a>
-				</Link>
+                    <Card.Title as='div'>
+                        <strong>{product.name}</strong>
+                    </Card.Title>
+
+                </Link>
 
 				<Card.Text as='div'>
 					<Rating
@@ -30,8 +29,8 @@ const Product = ({ product }: any) => {
 
 				<Card.Text as='h3'>${product.price.toFixed(2)}</Card.Text>
 			</Card.Body>
-		</Card>
-	)
+        </Card>
+    );
 }
 
 export default Product

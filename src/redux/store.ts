@@ -28,14 +28,14 @@ import {
     orderListReducer,
     orderDeliverReducer,
 } from './reducers/orderReducers'
-productDelete: productDeleteReducer,
-    productCreate: productCreateReducer,
-    productUpdate: productUpdateReducer,
-    productReviewCreate: productReviewCreateReducer,
-    
+
 const reducer = combineReducers({
     productList: productListReducer,
     getProduct: getProductReducer,
+    productDelete: productDeleteReducer,
+    productCreate: productCreateReducer,
+    productUpdate: productUpdateReducer,
+    productReviewCreate: productReviewCreateReducer,
     cart: cartReducer,
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,

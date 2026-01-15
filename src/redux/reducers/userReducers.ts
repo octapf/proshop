@@ -66,3 +66,48 @@ export const userUpdateProfileReducer = (state = { userInfo: {} }, action: any) 
 			return state
 	}
 }
+
+export const userListReducer = (state = { users: [] }, action: any) => {
+	switch (action.type) {
+		case actions.USER_LIST_REQUEST:
+			return { loading: true }
+		case actions.USER_LIST_SUCCESS:
+			return { loading: false, users: action.payload }
+		case actions.USER_LIST_FAIL:
+			return { loading: false, error: action.payload }
+		case actions.USER_LIST_RESET:
+			return { users: [] }
+		default:
+			return state
+	}
+}
+
+export const userDeleteReducer = (state = {}, action: any) => {
+	switch (action.type) {
+		case actions.USER_DELETE_REQUEST:
+			return { loading: true }
+		case actions.USER_DELETE_SUCCESS:
+			return { loading: false, success: true }
+		case actions.USER_DELETE_FAIL:
+			return { loading: false, error: action.payload }
+		default:
+			return state
+	}
+}
+
+export const userUpdateReducer = (state = { user: {} }, action: any) => {
+	switch (action.type) {
+		case actions.USER_UPDATE_REQUEST:
+			return { loading: true }
+		case actions.USER_UPDATE_SUCCESS:
+			return { loading: false, success: true }
+		case actions.USER_UPDATE_FAIL:
+			return { loading: false, error: action.payload }
+		case actions.USER_UPDATE_RESET:
+			return {
+				user: {}
+			}
+		default:
+			return state
+	}
+}
