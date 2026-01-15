@@ -209,3 +209,106 @@ export const updateUserProfile = (user: any) => async (dispatch: any, getState: 
 		})
 	}
 }
+
+export const listUsers = () => async (dispatch: any, getState: any) => {
+	try {
+		dispatch({
+			type: userActions.USER_LIST_REQUEST,
+		})
+
+		const {
+			userLogin: { userInfo },
+		} = getState()
+
+		const config = {
+			headers: {
+				Authorization: `Bearer ${userInfo.token}`,
+			},
+		}
+
+		const { data } = await axios.get(`/api/users`, config)
+
+		dispatch({
+			type: userActions.USER_LIST_SUCCESS,
+			payload: data,
+		})
+	} catch (error: any) {
+		dispatch({
+			type: userActions.USER_LIST_FAIL,
+			payload:
+				error.response && error.response.data.message
+					? error.response.data.message
+					: error.message,
+		})
+	}
+}
+
+export const deleteUser = (id: string) => async (dispatch: any, getState: any) => {
+	try {
+		dispatch({
+			type: userActions.USER_DELETE_REQUEST,
+		})
+
+		const {
+			userLogin: { userInfo },
+		} = getState()
+
+		const config = {
+			headers: {
+				Authorization: `Bearer ${userInfo.token}`,
+			},
+		}
+
+		await axios.delete(`/api/users/${id}`, config)
+
+		dispatch({
+			type: userActions.USER_DELETE_SUCCESS,
+		})
+	} catch (error: any) {
+		dispatch({
+			type: userActions.USER_DELETE_FAIL,
+			payload:
+				error.response && error.response.data.message
+					? error.response.data.message
+					: error.message,
+		})
+	}
+}
+
+export const updateUser = (user: any) => async (dispatch: any, getState: any) => {
+	try {
+		dispatch({
+			type: userActions.USER_UPDATE_REQUEST,
+		})
+
+		const {
+			userLogin: { userInfo },
+		} = getState()
+
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${userInfo.token}`,
+			},
+		}
+
+		const { data } = await axios.put(`/api/users/${user._id}`, user, config)
+
+		dispatch({
+			type: userActions.USER_UPDATE_SUCCESS,
+		})
+
+		dispatch({
+			type: userActions.USER_DETAILS_SUCCESS,
+			payload: data,
+		})
+	} catch (error: any) {
+		dispatch({
+			type: userActions.USER_UPDATE_FAIL,
+			payload:
+				error.response && error.response.data.message
+					? error.response.data.message
+					: error.message,
+		})
+	}
+}

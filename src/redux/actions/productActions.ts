@@ -39,6 +39,8 @@ export const listProductDetails = (id: string) => async (dispatch: any) => {
     }
 }
 
+export const getProduct = listProductDetails;
+
 export const deleteProduct = (id: string) => async (dispatch: any, getState: any) => {
 	try {
 		dispatch({
