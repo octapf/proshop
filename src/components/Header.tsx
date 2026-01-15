@@ -6,9 +6,11 @@ import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { logout } from '@/redux/actions/userActions';
 import { Link, usePathname, useRouter } from '@/i18n/routing';
 import { useTranslations, useLocale } from 'next-intl';
+import { useTheme } from './ThemeProvider';
 
 const Header = () => {
     const dispatch = useDispatch();
+    const { theme, toggleTheme } = useTheme();
     const t = useTranslations('Header');
     const locale = useLocale();
     const router = useRouter();
@@ -33,7 +35,10 @@ const Header = () => {
                     <Navbar.Brand as={Link} href="/">{t('title')}</Navbar.Brand>
                     <Navbar.Toggle aria-controls='basic-navbar-nav' />
                      <Navbar.Collapse id='basic-navbar-nav'>
-                        <Nav className='ml-auto'>
+                        <Nav className='ms-auto'>
+                             <Nav.Link onClick={toggleTheme}>
+                                <i className={theme === 'light' ? 'fas fa-moon' : 'fas fa-sun'}></i>
+                             </Nav.Link>
                              <NavDropdown title={locale.toUpperCase()} id='language'>
                                 <NavDropdown.Item onClick={() => changeLanguage('en')}>English</NavDropdown.Item>
                                 <NavDropdown.Item onClick={() => changeLanguage('es')}>Español</NavDropdown.Item>

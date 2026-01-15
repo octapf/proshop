@@ -1,6 +1,7 @@
 
 'use client';
-import { PayPalButton } from 'react-paypal-button-v2'
+import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js'
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
@@ -16,10 +17,14 @@ import { useParams, useRouter } from 'next/navigation';
 const OrderScreen = () => {
     const params = useParams();
     const router = useRouter();
+    // @ts-ignore
+    const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
     const orderId = params?.id as string;
     const dispatch = useDispatch();
 
-    const [sdkReady, setSdkReady] = useState(false);
+    const [paypalClientId, setPaypalClientId] = useState('');
+    const [mercadoPagoPublicKey, setMercadoPagoPublicKey] = useState('');
+    const [preferenceId, setPreferenceId] = useState(null);
 
     const orderDetails = useSelector((state: any) => state.orderDetails)
     const { order, loading, error } = orderDetails;
@@ -49,16 +54,27 @@ const OrderScreen = () => {
             router.push('/login')
         }
 
-        const addPayPalScript = async () => {
-            const { data: clientId } = await axios.get('/api/config/paypal')
-            const script = document.createElement('script')
-            script.type = 'text/javascript'
-            script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
-            script.async = true
-            script.onload = () => {
-                setSdkReady(true)
-            }
-            document.body.appendChild(script)
+        const getPayPalClientId = async () => {
+             const { data: clientId } = await axios.get('/api/config/paypal')
+             setPaypalClientId(clientId)
+        }
+
+        const getMercadoPagoPublicKey = async () => {
+             const { data: publicKey } = await axios.get('/api/config/mercadopago');
+             if (publicKey) {
+                 setMercadoPagoPublicKey(publicKey);
+                 initMercadoPago(publicKey);
+                 createPreference();
+             }
+        }
+
+        const createPreference = async () => {
+             try {
+                 const { data } = await axios.post('/api/mercadopago/preference', { orderId });
+                 setPreferenceId(data.id);
+             } catch (error) {
+                 console.error(error);
+             }
         }
 
         if (!order || successPay || successDeliver || order._id !== orderId) {
@@ -67,13 +83,25 @@ const OrderScreen = () => {
             // @ts-ignore
             dispatch(getOrderDetails(orderId)) 
         } else if (!order.isPaid) {
-            if (!window.paypal) {
-                addPayPalScript()
-            } else {
-                setSdkReady(true)
+            if (!paypalClientId) {
+                getPayPalClientId()
+            }
+            if (!mercadoPagoPublicKey) {
+                getMercadoPagoPublicKey()
             }
         }
-    }, [dispatch, orderId, successPay, order, successDeliver, userInfo, router])
+
+        if (searchParams && searchParams.get('payment_status') === 'approved' && !order?.isPaid) {
+             const paymentResult = {
+                 id: searchParams.get('payment_id'),
+                 status: searchParams.get('status'),
+                 update_time: new Date().toISOString(),
+                 email_address: 'N/A' // Mercado Pago return url doesn't strictly provide payer email in query
+             }
+             // @ts-ignore
+             dispatch(payOrder(orderId, paymentResult))
+        }
+    }, [dispatch, orderId, successPay, order, successDeliver, userInfo, router, paypalClientId, mercadoPagoPublicKey])
 
     const successPaymentHandler = (paymentResult: any) => {
         // @ts-ignore
@@ -196,17 +224,42 @@ const OrderScreen = () => {
                                 </Row>
                             </ListGroup.Item>
                             {!order.isPaid && (
+                                <>
                                 <ListGroup.Item>
                                     {loadingPay && <Loader />}
-                                    {!sdkReady ? (
+                                    {!paypalClientId ? (
                                         <Loader />
                                     ) : (
-                                        <PayPalButton
-                                            amount={order.totalPrice}
-                                            onSuccess={successPaymentHandler}    
-                                        />
+                                        <PayPalScriptProvider options={{ clientId: paypalClientId }}>
+                                            <PayPalButtons
+                                                createOrder={(data, actions) => {
+                                                    return actions.order.create({
+                                                        purchase_units: [
+                                                            {
+                                                                amount: {
+                                                                    currency_code: "USD",
+                                                                    value: order.totalPrice,
+                                                                },
+                                                            },
+                                                        ],
+                                                        intent: "CAPTURE"
+                                                    });
+                                                }}
+                                                onApprove={(data, actions) => {
+                                                    return actions.order!.capture().then((details) => {
+                                                        successPaymentHandler(details);
+                                                    });
+                                                }}
+                                            />
+                                        </PayPalScriptProvider>
                                     )}
                                 </ListGroup.Item>
+                                <ListGroup.Item>
+                                     {preferenceId && (
+                                         <Wallet initialization={{ preferenceId: preferenceId }} customization={{ texts: { valueProp: 'smart_option'}}} />
+                                     )}
+                                </ListGroup.Item>
+                            </>
                             )}
                             {loadingDeliver && <Loader />}
                             {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (

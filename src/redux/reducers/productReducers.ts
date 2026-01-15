@@ -1,7 +1,13 @@
 
 import * as actions from '../constants/productConstants'
 
-export const productListReducer = (state = { products: [] }, action: any) => {
+interface Action {
+    type: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    payload?: any;
+}
+
+export const productListReducer = (state = { products: [] }, action: Action) => {
 	switch (action.type) {
 		case actions.PRODUCT_LIST_REQUEST:
 			return { ...state, loading: true, products: [] }
@@ -21,7 +27,7 @@ export const productListReducer = (state = { products: [] }, action: any) => {
 
 export const getProductReducer = (
 	state = { product: { reviews: [] } },
-	action: any
+	action: Action
 ) => {
 	switch (action.type) {
 		case actions.PRODUCT_SINGLE_REQUEST:
@@ -36,7 +42,7 @@ export const getProductReducer = (
 	}
 }
 
-export const productDeleteReducer = (state = {}, action: any) => {
+export const productDeleteReducer = (state = {}, action: Action) => {
 	switch (action.type) {
 		case actions.PRODUCT_DELETE_REQUEST:
 			return { loading: true }
@@ -49,7 +55,7 @@ export const productDeleteReducer = (state = {}, action: any) => {
 	}
 }
 
-export const productCreateReducer = (state = {}, action: any) => {
+export const productCreateReducer = (state = {}, action: Action) => {
 	switch (action.type) {
 		case actions.PRODUCT_CREATE_REQUEST:
 			return { loading: true }
@@ -64,7 +70,7 @@ export const productCreateReducer = (state = {}, action: any) => {
 	}
 }
 
-export const productUpdateReducer = (state = { product: {} }, action: any) => {
+export const productUpdateReducer = (state = { product: {} }, action: Action) => {
 	switch (action.type) {
 		case actions.PRODUCT_UPDATE_REQUEST:
 			return { loading: true }
@@ -79,7 +85,7 @@ export const productUpdateReducer = (state = { product: {} }, action: any) => {
 	}
 }
 
-export const productReviewCreateReducer = (state = {}, action: any) => {
+export const productReviewCreateReducer = (state = {}, action: Action) => {
 	switch (action.type) {
 		case actions.PRODUCT_CREATE_REVIEW_REQUEST:
 			return { loading: true }

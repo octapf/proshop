@@ -1,8 +1,9 @@
 
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import './bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './globals.css';
+import ThemeProvider from '@/components/ThemeProvider';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Container } from 'react-bootstrap';
@@ -38,6 +39,7 @@ export default async function RootLayout({
 		/>
       </head>
       <body className={inter.className} suppressHydrationWarning={true}>
+        <ThemeProvider>
         <NextIntlClientProvider messages={messages}>
           <ReduxProvider>
               <Header />
@@ -49,6 +51,7 @@ export default async function RootLayout({
               <Footer />
           </ReduxProvider>
         </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

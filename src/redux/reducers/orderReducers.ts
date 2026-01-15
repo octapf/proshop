@@ -1,7 +1,13 @@
 
 import * as actions from '../constants/orderConstants'
 
-export const orderCreateReducer = (state = { order: {} }, action: any) => {
+interface Action {
+    type: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    payload?: any;
+}
+
+export const orderCreateReducer = (state = { order: {} }, action: Action) => {
 	switch (action.type) {
 		case actions.ORDER_CREATE_REQUEST:
 			return { ...state, loading: true, success: false }
@@ -20,7 +26,7 @@ export const orderDetailsReducer = (
 		loading: true,
 		order: { orderItems: [], shippingAddress: {}, user: {} },
 	},
-	action: any
+	action: Action
 ) => {
 	switch (action.type) {
 		case actions.ORDER_DETAILS_REQUEST:
@@ -41,7 +47,7 @@ export const orderDetailsReducer = (
 	}
 }
 
-export const orderPayReducer = (state = {}, action: any) => {
+export const orderPayReducer = (state = {}, action: Action) => {
 	switch (action.type) {
 		case actions.ORDER_PAY_REQUEST:
 			return { loading: true }
@@ -60,7 +66,7 @@ export const orderPayReducer = (state = {}, action: any) => {
 	}
 }
 
-export const orderListMyReducer = (state = { orders: [] }, action: any) => {
+export const orderListMyReducer = (state = { orders: [] }, action: Action) => {
 	switch (action.type) {
 		case actions.ORDER_LIST_MY_REQUEST:
 			return { ...state, loading: true }
@@ -77,7 +83,7 @@ export const orderListMyReducer = (state = { orders: [] }, action: any) => {
 	}
 }
 
-export const orderListReducer = (state = { orders: [] }, action: any) => {
+export const orderListReducer = (state = { orders: [] }, action: Action) => {
 	switch (action.type) {
 		case actions.ORDER_LIST_REQUEST:
 			return { loading: true }
@@ -90,7 +96,7 @@ export const orderListReducer = (state = { orders: [] }, action: any) => {
 	}
 }
 
-export const orderDeliverReducer = (state = {}, action: any) => {
+export const orderDeliverReducer = (state = {}, action: Action) => {
 	switch (action.type) {
 		case actions.ORDER_DELIVER_REQUEST:
 			return { loading: true }

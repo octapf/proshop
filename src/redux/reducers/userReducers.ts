@@ -1,7 +1,13 @@
 
 import * as actions from '../constants/userConstants'
 
-export const userLoginReducer = (state = { userInfo: {} }, action: any) => {
+interface Action {
+    type: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    payload?: any;
+}
+
+export const userLoginReducer = (state = { userInfo: {} }, action: Action) => {
 	switch (action.type) {
 		case actions.USER_LOGIN_REQUEST:
 			return { ...state, loading: true }
@@ -19,7 +25,7 @@ export const userLoginReducer = (state = { userInfo: {} }, action: any) => {
 	}
 }
 
-export const userRegisterReducer = (state = { userInfo: {} }, action: any) => {
+export const userRegisterReducer = (state = { userInfo: {} }, action: Action) => {
 	switch (action.type) {
 		case actions.USER_REGISTER_REQUEST:
 			return { ...state, loading: true }
@@ -32,7 +38,7 @@ export const userRegisterReducer = (state = { userInfo: {} }, action: any) => {
 	}
 }
 
-export const userDetailsReducer = (state = { user: {} }, action: any) => {
+export const userDetailsReducer = (state = { user: {} }, action: Action) => {
 	switch (action.type) {
 		case actions.USER_DETAILS_REQUEST:
 			return { ...state, loading: true }
@@ -50,7 +56,7 @@ export const userDetailsReducer = (state = { user: {} }, action: any) => {
 	}
 }
 
-export const userUpdateProfileReducer = (state = { userInfo: {} }, action: any) => {
+export const userUpdateProfileReducer = (state = { userInfo: {} }, action: Action) => {
 	switch (action.type) {
 		case actions.USER_UPDATE_PROFILE_REQUEST:
 			return { ...state, loading: true, success: false }
@@ -67,7 +73,7 @@ export const userUpdateProfileReducer = (state = { userInfo: {} }, action: any) 
 	}
 }
 
-export const userListReducer = (state = { users: [] }, action: any) => {
+export const userListReducer = (state = { users: [] }, action: Action) => {
 	switch (action.type) {
 		case actions.USER_LIST_REQUEST:
 			return { loading: true }
@@ -82,7 +88,7 @@ export const userListReducer = (state = { users: [] }, action: any) => {
 	}
 }
 
-export const userDeleteReducer = (state = {}, action: any) => {
+export const userDeleteReducer = (state = {}, action: Action) => {
 	switch (action.type) {
 		case actions.USER_DELETE_REQUEST:
 			return { loading: true }
@@ -95,7 +101,7 @@ export const userDeleteReducer = (state = {}, action: any) => {
 	}
 }
 
-export const userUpdateReducer = (state = { user: {} }, action: any) => {
+export const userUpdateReducer = (state = { user: {} }, action: Action) => {
 	switch (action.type) {
 		case actions.USER_UPDATE_REQUEST:
 			return { loading: true }
