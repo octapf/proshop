@@ -1,7 +1,5 @@
-
 'use client';
-import React, { useEffect } from 'react'
-import { LinkContainer } from 'react-router-bootstrap'
+import React, { useEffect, Suspense } from 'react'
 import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '@/components/Message'
@@ -16,13 +14,13 @@ import { PRODUCT_CREATE_RESET } from '@/redux/constants/productConstants'
 import Link from 'next/link'
 import { useRouter, useParams, useSearchParams } from 'next/navigation'
 
-const ProductListScreen = () => {
+const ProductListContent = () => {
     const params = useParams();
     const searchParams = useSearchParams();
 	const pageNumber = searchParams.get('pageNumber') || 1
     const router = useRouter();
 
-	const dispatch = useDispatch()
+	const dispatch = useDispatch<any>()
 
 	const productList = useSelector((state: any) => state.productList)
 	const { loading, error, products, page, pages } = productList
@@ -144,6 +142,14 @@ const ProductListScreen = () => {
 			)}
 		</>
 	)
+}
+
+const ProductListScreen = () => {
+    return (
+        <Suspense fallback={<Loader />}>
+            <ProductListContent />
+        </Suspense>
+    )
 }
 
 export default ProductListScreen

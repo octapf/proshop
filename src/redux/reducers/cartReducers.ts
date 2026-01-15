@@ -2,7 +2,7 @@
 import * as actions from '../constants/cartConstants'
 
 export const cartReducer = (
-	state = {
+	state: { cartItems: any[]; shippingAddress: any; paymentMethod: string } = {
 		cartItems: [],
 		shippingAddress: {},
 		paymentMethod: ''

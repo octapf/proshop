@@ -1,14 +1,14 @@
-
 'use client';
-import React, { useEffect } from 'react'
+import React, { useEffect, Suspense } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
-import { Row, Col, ListGroup, UserImage, Form, Button, Card, Image } from 'react-bootstrap'
+import { Row, Col, ListGroup, Form, Button, Card, Image } from 'react-bootstrap'
 import { addToCart, removeFromCart } from '@/redux/actions/cartActions'
 import Message from '@/components/Message'
 import { useSearchParams, useRouter, useParams } from 'next/navigation'
+import Loader from '@/components/Loader'
 
-const CartScreen = () => {
+const CartContent = () => {
     // Handling routing / params
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -123,6 +123,14 @@ const CartScreen = () => {
 		</Row>
     )
 
+}
+
+const CartScreen = () => {
+    return (
+        <Suspense fallback={<Loader />}>
+            <CartContent />
+        </Suspense>
+    )
 }
 
 export default CartScreen;

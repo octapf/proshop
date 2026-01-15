@@ -1,9 +1,7 @@
-
 'use client';
 
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom' // Remove
-import LinkNext from 'next/link'
+import React, { useState, useEffect, Suspense } from 'react'
+import Link from 'next/link'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '@/components/Message'
@@ -12,7 +10,7 @@ import FormContainer from '@/components/FormContainer'
 import { login } from '@/redux/actions/userActions'
 import { useRouter, useSearchParams } from 'next/navigation';
 
-const LoginScreen = () => {
+const LoginContent = () => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
@@ -73,13 +71,21 @@ const LoginScreen = () => {
 			<Row className='py-3'>
 				<Col>
 					New Customer?{' '}
-                    <LinkNext href={redirect ? `/register?redirect=${redirect}` : '/register'}>
+                    <Link href={redirect ? `/register?redirect=${redirect}` : '/register'}>
                         Register
-                    </LinkNext>
+                    </Link>
 				</Col>
 			</Row>
 		</FormContainer>
 	)
+}
+
+const LoginScreen = () => {
+    return (
+        <Suspense fallback={<Loader />}>
+            <LoginContent />
+        </Suspense>
+    )
 }
 
 export default LoginScreen

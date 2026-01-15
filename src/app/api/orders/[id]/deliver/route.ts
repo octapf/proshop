@@ -4,7 +4,9 @@ import connectDB from '@/lib/db';
 import Order from '@/models/orderModel';
 import { protect } from '@/lib/authMiddleware';
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, props: { params: Promise<{ id: string }> }) {
+    const params = await props.params;
+
     await connectDB();
     
     let user;

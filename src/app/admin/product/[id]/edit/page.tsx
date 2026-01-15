@@ -2,7 +2,6 @@
 'use client';
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
-import { LinkContainer } from 'react-router-bootstrap'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '@/components/Message'
@@ -27,7 +26,7 @@ const ProductEditScreen = () => {
 	const [description, setDescription] = useState('')
 	const [uploading, setUploading] = useState(false)
 
-	const dispatch = useDispatch()
+	const dispatch = useDispatch<any>()
 
 	const productDetails = useSelector((state: any) => state.getProduct)
 	const { loading, error, product } = productDetails

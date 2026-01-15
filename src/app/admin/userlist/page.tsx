@@ -1,7 +1,6 @@
 
 'use client';
 import React, { useEffect } from 'react'
-import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '@/components/Message'
@@ -11,7 +10,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 const UserListScreen = () => {
-	const dispatch = useDispatch()
+	const dispatch = useDispatch<any>()
     const router = useRouter();
 
 	const userList = useSelector((state: any) => state.userList)

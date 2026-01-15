@@ -1,7 +1,6 @@
 
 'use client';
 import React, { useState, useEffect } from 'react'
-import { LinkContainer } from 'react-router-bootstrap'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '@/components/Message'
@@ -21,7 +20,7 @@ const UserEditScreen = () => {
 	const [email, setEmail] = useState('')
 	const [isAdmin, setIsAdmin] = useState(false)
 
-	const dispatch = useDispatch()
+	const dispatch = useDispatch<any>()
 
 	const userDetails = useSelector((state: any) => state.userDetails)
 	const { loading, error, user } = userDetails

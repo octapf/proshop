@@ -64,10 +64,13 @@ const shippingAddressFromStorage = typeof window !== 'undefined' && localStorage
     ? JSON.parse(localStorage.getItem('shippingAddress') as string)
     : {}
 
+const paymentMethodFromStorage = typeof window !== 'undefined' && localStorage.getItem('paymentMethod')? JSON.parse(localStorage.getItem('paymentMethod') as string) : ''
+
 const initialState = {
     cart: {
         cartItems: cartItemsFromStorage,
         shippingAddress: shippingAddressFromStorage,
+        paymentMethod: paymentMethodFromStorage,
     },
     userLogin: { userInfo: userInfoFromStorage },
 }

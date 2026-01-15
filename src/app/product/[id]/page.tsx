@@ -2,8 +2,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom' // Wait, remove this
-import LinkNext from 'next/link'
+import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import Rating from '@/components/Rating'
@@ -42,9 +41,9 @@ const ProductScreen = () => {
 
 	return (
         <>
-            <LinkNext href='/' className='btn btn-light my-3'>
+            <Link href='/' className='btn btn-light my-3'>
                 Go Back
-            </LinkNext>
+            </Link>
             {loading ? (
 				<Loader />
 			) : error ? (
