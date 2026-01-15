@@ -1,0 +1,36 @@
+{
+  "Header": {
+    "title": "ProShop",
+    "cart": "Carrito",
+    "login": "Ingresar",
+    "logout": "Salir",
+    "profile": "Perfil",
+    "admin": "Admin",
+    "products": "Productos",
+    "users": "Usuarios",
+    "orders": "Pedidos",
+    "searchPlaceholder": "Buscar productos..."
+  },
+  "HomeScreen": {
+    "latestProducts": "Últimos Productos"
+  },
+  "Product": {
+    "addToCart": "Agregar al Carrito",
+    "reviews": "reseñas",
+    "price": "Precio",
+    "status": "Estado",
+    "inStock": "En Stock",
+    "outOfStock": "Agotado",
+    "quantity": "Cant"
+  },
+  "Cart": {
+    "title": "Carrito de Compras",
+    "empty": "Tu carrito está vacío",
+    "goBack": "Volver",
+    "subtotal": "Subtotal",
+    "checkout": "Proceder al Pago"
+  },
+  "Footer": {
+      "copyright": "Copyright &copy; ProShop"
+  }
+}

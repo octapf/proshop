@@ -7,6 +7,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Container } from 'react-bootstrap';
 import ReduxProvider from '@/components/ReduxProvider';
+import {NextIntlClientProvider} from 'next-intl';
+import {getMessages} from 'next-intl/server';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,13 +17,18 @@ export const metadata: Metadata = {
   description: 'Find the best products for the cheapest prices',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  params
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
+  params: Promise<{locale: string}>
 }) {
+  const { locale } = await params;
+  const messages = await getMessages();
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <head>
         <link
 			rel="stylesheet"
@@ -31,15 +38,17 @@ export default function RootLayout({
 		/>
       </head>
       <body className={inter.className} suppressHydrationWarning={true}>
-        <ReduxProvider>
-            <Header />
-            <main className="py-3">
-                <Container>
-                    {children}
-                </Container>
-            </main>
-            <Footer />
-        </ReduxProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ReduxProvider>
+              <Header />
+              <main className="py-3">
+                  <Container>
+                      {children}
+                  </Container>
+              </main>
+              <Footer />
+          </ReduxProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

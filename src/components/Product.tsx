@@ -1,11 +1,13 @@
 
 'use client';
 import React from 'react'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 import { Card } from 'react-bootstrap'
 import Rating from './Rating'
+import { useTranslations } from 'next-intl';
 
 const Product = ({ product }: any) => {
+    const t = useTranslations('Product');
 	return (
         <Card className='my-3 p-3 rounded'>
             <Link href={`/product/${product._id}`}>
@@ -23,7 +25,7 @@ const Product = ({ product }: any) => {
 				<Card.Text as='div'>
 					<Rating
 						value={product.rating}
-						text={`${product.numReviews} reviews`}
+						text={`${product.numReviews} ${t('reviews')}`}
 					/>
 				</Card.Text>
 

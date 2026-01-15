@@ -8,11 +8,13 @@ import Product from '@/components/Product'
 import Loader from '@/components/Loader'
 import Message from '@/components/Message'
 import { listProducts } from '@/redux/actions/productActions'
+import { useTranslations } from 'next-intl';
 
 export default function Home() {
     const dispatch = useDispatch();
     const productList = useSelector((state: any) => state.productList);
     const { loading, error, products } = productList;
+    const t = useTranslations('HomeScreen');
 
     useEffect(() => {
         // @ts-ignore
@@ -21,7 +23,7 @@ export default function Home() {
 
     return (
         <>
-            <h1>Latest Products</h1>
+            <h1>{t('latestProducts')}</h1>
             {loading ? (
                 <Loader />
             ) : error ? (
