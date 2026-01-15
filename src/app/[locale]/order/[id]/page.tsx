@@ -1,7 +1,6 @@
 
 'use client';
 import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js'
-import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
@@ -23,8 +22,6 @@ const OrderScreen = () => {
     const dispatch = useDispatch();
 
     const [paypalClientId, setPaypalClientId] = useState('');
-    const [mercadoPagoPublicKey, setMercadoPagoPublicKey] = useState('');
-    const [preferenceId, setPreferenceId] = useState(null);
 
     const orderDetails = useSelector((state: any) => state.orderDetails)
     const { order, loading, error } = orderDetails;
@@ -59,24 +56,6 @@ const OrderScreen = () => {
              setPaypalClientId(clientId)
         }
 
-        const getMercadoPagoPublicKey = async () => {
-             const { data: publicKey } = await axios.get('/api/config/mercadopago');
-             if (publicKey) {
-                 setMercadoPagoPublicKey(publicKey);
-                 initMercadoPago(publicKey);
-                 createPreference();
-             }
-        }
-
-        const createPreference = async () => {
-             try {
-                 const { data } = await axios.post('/api/mercadopago/preference', { orderId });
-                 setPreferenceId(data.id);
-             } catch (error) {
-                 console.error(error);
-             }
-        }
-
         if (!order || successPay || successDeliver || order._id !== orderId) {
             dispatch({ type: ORDER_PAY_RESET })
             dispatch({ type: ORDER_DELIVER_RESET })
@@ -86,22 +65,8 @@ const OrderScreen = () => {
             if (!paypalClientId) {
                 getPayPalClientId()
             }
-            if (!mercadoPagoPublicKey) {
-                getMercadoPagoPublicKey()
-            }
         }
-
-        if (searchParams && searchParams.get('payment_status') === 'approved' && !order?.isPaid) {
-             const paymentResult = {
-                 id: searchParams.get('payment_id'),
-                 status: searchParams.get('status'),
-                 update_time: new Date().toISOString(),
-                 email_address: 'N/A' // Mercado Pago return url doesn't strictly provide payer email in query
-             }
-             // @ts-ignore
-             dispatch(payOrder(orderId, paymentResult))
-        }
-    }, [dispatch, orderId, successPay, order, successDeliver, userInfo, router, paypalClientId, mercadoPagoPublicKey])
+    }, [dispatch, orderId, successPay, order, successDeliver, userInfo, router, paypalClientId])
 
     const successPaymentHandler = (paymentResult: any) => {
         // @ts-ignore
@@ -253,11 +218,6 @@ const OrderScreen = () => {
                                             />
                                         </PayPalScriptProvider>
                                     )}
-                                </ListGroup.Item>
-                                <ListGroup.Item>
-                                     {preferenceId && (
-                                         <Wallet initialization={{ preferenceId: preferenceId }} customization={{ texts: { valueProp: 'smart_option'}}} />
-                                     )}
                                 </ListGroup.Item>
                             </>
                             )}
