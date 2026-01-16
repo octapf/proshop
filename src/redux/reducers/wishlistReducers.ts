@@ -1,6 +1,6 @@
 import * as actions from '../constants/wishlistConstants'
 
-export const wishlistReducer = (state = { wishlistItems: [] }, action: any) => {
+export const wishlistReducer = (state = { wishlistItems: [] as any[] }, action: any) => {
 	switch (action.type) {
 		case actions.WISHLIST_ADD_ITEM:
 			const item = action.payload

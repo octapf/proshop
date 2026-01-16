@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Col } from 'react-bootstrap'
+import { Form, Button, Col, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/navigation'
 import FormContainer from '@/components/FormContainer'
