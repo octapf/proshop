@@ -1,6 +1,6 @@
 
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Poppins } from 'next/font/google'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './globals.css';
 import ThemeProvider from '@/components/ThemeProvider';
@@ -11,7 +11,12 @@ import ReduxProvider from '@/components/ReduxProvider';
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages} from 'next-intl/server';
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+const poppins = Poppins({ 
+  weight: ['400', '600', '700'], 
+  subsets: ['latin'], 
+  variable: '--font-poppins' 
+})
 
 export const metadata: Metadata = {
   title: 'Welcome to ProShop',
@@ -38,7 +43,7 @@ export default async function RootLayout({
 			crossOrigin="anonymous"
 		/>
       </head>
-      <body className={inter.className} suppressHydrationWarning={true}>
+      <body className={`${inter.variable} ${poppins.variable}`} suppressHydrationWarning={true}>
         <ThemeProvider>
         <NextIntlClientProvider messages={messages}>
           <ReduxProvider>

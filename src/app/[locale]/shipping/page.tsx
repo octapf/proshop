@@ -11,14 +11,14 @@ import CheckoutSteps from '@/components/CheckoutSteps'
 
 const ShippingScreen = () => {
     const router = useRouter();
-	const { shippingAddress } = useSelector((state: any) => state.cart)
+	const { shippingAddress, guestInfo } = useSelector((state: any) => state.cart)
 	const { userInfo } = useSelector((state: any) => state.userLogin)
 
     useEffect(() => {
-        if (!userInfo) {
+        if (!userInfo && !guestInfo) {
             router.push('/login')
         }
-    }, [userInfo, router]);
+    }, [userInfo, guestInfo, router]);
 
 	const [address, setAddress] = useState(shippingAddress.address || '')
 	const [city, setCity] = useState(shippingAddress.city || '')

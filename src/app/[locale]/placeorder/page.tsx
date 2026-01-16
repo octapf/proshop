@@ -81,50 +81,48 @@ const PlaceOrderScreen = () => {
 			<CheckoutSteps step1 step2 step3 step4 />
 			<Row>
 				<Col md={8}>
-					<ListGroup variant='flush'>
-						<ListGroup.Item>
-							<h2>Shipping</h2>
-							<p>
-								<strong>Address: </strong>
+					<ListGroup variant='flush' className="shadow-sm rounded-4 overflow-hidden mb-4">
+						<ListGroup.Item className="p-4">
+							<h2 className="mb-3">Shipping</h2>
+							<p className="mb-0 text-secondary">
+								<strong className="text-dark">Address: </strong>
 								{cart.shippingAddress.address}, {cart.shippingAddress.city},{' '}
 								{cart.shippingAddress.postalCode}, {cart.shippingAddress.country}
 							</p>
 						</ListGroup.Item>
 
-						<ListGroup.Item>
-							<h2>Payment Method</h2>
-							<p>
-								<strong>Method: </strong>
+						<ListGroup.Item className="p-4">
+							<h2 className="mb-3">Payment Method</h2>
+							<p className="mb-0 text-secondary">
+								<strong className="text-dark">Method: </strong>
 								{cart.paymentMethod}
 							</p>
-						</ListGroup.Item>
-
-						<ListGroup.Item>
-							<h2>Order Items </h2>
+						<ListGroup.Item className="p-4">
+							<h2 className="mb-3">Order Items </h2>
 
 							{cart.cartItems.length === 0 ? (
 								<Message>Your cart is empty</Message>
 							) : (
 								<ListGroup variant='flush'>
 									{cart.cartItems.map((item: any, index: number) => (
-										<ListGroup.Item key={index}>
-											<Row>
-												<Col md={1}>
+										<ListGroup.Item key={index} className="border-0 px-0 py-3 border-bottom">
+											<Row className="align-items-center">
+												<Col md={2}>
 													<Image
 														src={item.image}
 														alt={item.name}
 														fluid
 														rounded
+                                                        className="shadow-sm"
 													/>
 												</Col>
 												<Col>
-													<Link href={`/product/${item.product}`}>
+													<Link href={`/product/${item.product}`} className="text-decoration-none text-dark fw-bold">
 														{item.name}
 													</Link>
 												</Col>
-												<Col md={4}>
-													{item.qty} x ${item.price} = $
-													{(item.qty * item.price).toFixed(2)}
+												<Col md={4} className="text-muted">
+													{item.qty} x ${item.price} = <strong className="text-dark">${(item.qty * item.price).toFixed(2)}</strong>
 												</Col>
 											</Row>
 										</ListGroup.Item>
@@ -135,47 +133,47 @@ const PlaceOrderScreen = () => {
 					</ListGroup>
 				</Col>
 				<Col md={4}>
-					<Card>
+					<Card className="border-0 shadow-lg rounded-4 sticky-top" style={{ top: '20px' }}>
 						<ListGroup variant='flush'>
-							<ListGroup.Item>
-								<h2>Order Summary</h2>
+							<ListGroup.Item className="bg-primary text-white pt-4 pb-3 rounded-top-4">
+								<h2 className="text-white fs-4 mb-0">Order Summary</h2>
 							</ListGroup.Item>
-							<ListGroup.Item>
+							<ListGroup.Item className="px-4 py-3">
 								<Row>
-									<Col>Items</Col>
-									<Col>${cart.itemsPrice}</Col>
+									<Col className="text-secondary">Items</Col>
+									<Col className="fw-bold">${cart.itemsPrice}</Col>
 								</Row>
 							</ListGroup.Item>
 
-							<ListGroup.Item>
+							<ListGroup.Item className="px-4 py-3">
 								<Row>
-									<Col>Shipping</Col>
-									<Col>${cart.shippingPrice}</Col>
+									<Col className="text-secondary">Shipping</Col>
+									<Col className="fw-bold">${cart.shippingPrice}</Col>
 								</Row>
 							</ListGroup.Item>
 
-							<ListGroup.Item>
+							<ListGroup.Item className="px-4 py-3">
 								<Row>
-									<Col>Tax</Col>
-									<Col>${cart.taxPrice}</Col>
+									<Col className="text-secondary">Tax</Col>
+									<Col className="fw-bold">${cart.taxPrice}</Col>
 								</Row>
 							</ListGroup.Item>
                             
-                            <ListGroup.Item>
-								<Row>
-									<Col>Total</Col>
-									<Col>${cart.totalPrice}</Col>
+                            <ListGroup.Item className="px-4 py-3 bg-light">
+								<Row className="align-items-center">
+									<Col className="text-uppercase fw-bold text-dark">Total</Col>
+									<Col className="fs-4 fw-bold text-primary">${cart.totalPrice}</Col>
 								</Row>
 							</ListGroup.Item>
                             
-                            <ListGroup.Item>
+                            <ListGroup.Item className="px-4">
                                 {error && <Message variant='danger'>{error}</Message>}
                             </ListGroup.Item>
 
-							<ListGroup.Item>
+							<ListGroup.Item className="p-4">
 								<Button
 									type='button'
-									className='btn-block'
+									className='btn-block w-100 rounded-pill py-2 shadow'
                                     disabled={cart.cartItems === 0}
 									onClick={placeOrderHandler}
 								>

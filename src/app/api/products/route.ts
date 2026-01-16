@@ -9,21 +9,37 @@ export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     const page = Number(searchParams.get('pageNumber')) || 1;
     const pageSize = 10;
-    const keywordParam = searchParams.get('keyword');
+    
+    // Filtering
+    const keyword = searchParams.get('keyword');
+    const category = searchParams.get('category');
+    const brand = searchParams.get('brand');
+    const minPrice = Number(searchParams.get('minPrice')) || 0;
+    const maxPrice = Number(searchParams.get('maxPrice')) || 1000000;
+    const rating = Number(searchParams.get('rating')) || 0;
 
-    const keyword = keywordParam
-        ? {
-            name: {
-                $regex: keywordParam,
-                $options: 'i',
-            },
-        }
-        : {};
+    const query: any = {};
+
+    if (keyword) {
+        query.name = { $regex: keyword, $options: 'i' };
+    }
+    if (category) {
+        query.category = category;
+    }
+    if (brand) {
+        query.brand = brand;
+    }
+    if (minPrice || maxPrice !== 1000000) {
+        query.price = { $gte: minPrice, $lte: maxPrice };
+    }
+    if (rating) {
+        query.rating = { $gte: rating };
+    }
 
     // @ts-ignore
-    const count = await Product.countDocuments({ ...keyword });
+    const count = await Product.countDocuments(query);
     // @ts-ignore
-    const products = await Product.find({ ...keyword })
+    const products = await Product.find(query)
         .limit(pageSize)
         .skip(pageSize * (page - 1));
 

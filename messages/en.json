@@ -31,6 +31,12 @@
     "checkout": "Proceed To Checkout"
   },
   "Footer": {
-      "copyright": "Copyright &copy; Miralab"
+      "copyright": "Copyright &copy; Miralab",
+    "about": "About Us",
+    "aboutText": "We provide the best products for the cheapest prices.",
+    "links": "Quick Links",
+    "contact": "Contact",
+    "address": "123 Commerce St",
+    "email": "info@proshop.com"
   }
 }

@@ -2,10 +2,11 @@
 import * as actions from '../constants/cartConstants'
 
 export const cartReducer = (
-	state: { cartItems: any[]; shippingAddress: any; paymentMethod: string } = {
+	state: { cartItems: any[]; shippingAddress: any; paymentMethod: string, guestInfo: any } = {
 		cartItems: [],
 		shippingAddress: {},
-		paymentMethod: ''
+		paymentMethod: '',
+        guestInfo: {}
 	},
 	action: any
 ) => {
@@ -45,6 +46,11 @@ export const cartReducer = (
 			return {
 				...state, paymentMethod: action.payload
 			}
+        
+        case actions.CART_SAVE_GUEST_INFO:
+            return {
+                ...state, guestInfo: action.payload
+            }
 
 		case actions.CART_RESET:
 			return {

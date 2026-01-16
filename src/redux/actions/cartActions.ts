@@ -35,3 +35,8 @@ export const savePaymentMethod = (data: any) => (dispatch: any) => {
 
 	localStorage.setItem('paymentMethod', JSON.stringify(data))
 }
+
+export const saveGuestInfo = (data: any) => (dispatch: any) => {
+    dispatch({ type: actions.CART_SAVE_GUEST_INFO, payload: data })
+    localStorage.setItem('guestInfo', JSON.stringify(data))
+}

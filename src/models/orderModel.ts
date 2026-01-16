@@ -5,9 +5,13 @@ const orderSchema = new mongoose.Schema(
 	{
 		user: {
 			type: mongoose.Schema.Types.ObjectId,
-			required: true,
+			required: false,
 			ref: 'User',
 		},
+        guestInfo: {
+            name: { type: String, required: false },
+            email: { type: String, required: false },
+        },
 		orderItems: [
 			{
 				name: { type: String, required: true },

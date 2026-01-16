@@ -35,7 +35,7 @@
 body {
     background-color: var(--background-color);
     color: var(--text-main);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     line-height: 1.6;
 }
 
@@ -49,6 +49,7 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--heading-color);
     font-weight: 700;
     letter-spacing: -0.5px;
+    font-family: var(--font-poppins), sans-serif;
 }
 
 h1 {
@@ -141,16 +142,32 @@ h3 {
     opacity: 0.8;
 }
 
+/* Glass Navbar */
+.glass-navbar {
+    background-color: rgba(52, 58, 64, 0.75) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+[data-bs-theme="dark"] .glass-navbar {
+    background-color: rgba(26, 26, 26, 0.75) !important;
+}
+
 /* Button Modernization */
 .btn {
     border-radius: 50px; /* Pill shape */
-    padding: 0.5rem 1.5rem;
+    padding: 0.6rem 2rem;
     font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    box-shadow: var(--shadow-sm);
+    text-transform: capitalize;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); /* Soft shadow */
 }
 
 .btn:hover {
@@ -158,8 +175,28 @@ h3 {
     box-shadow: var(--shadow-md);
 }
 
-.btn-primary {
-    background-color: var(--primary-color);
+/* Hide Add to Cart initially */
+.card-actions {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 1rem;
+}
+
+.card:hover .card-actions {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Price styling */
+.product-price {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--heading-color);
+    margin-bottom: 0.5rem;
+}
+
+/*  background-color: var(--primary-color);
     border: none;
     color: #fff;
 }
@@ -255,4 +292,110 @@ a:hover {
     .carousel img {
         width: 100% !important;
     }
+}
+
+.hover-light:hover {
+    color: #fff !important;
+    transition: color 0.2s ease;
+}
+
+/* Skeleton Loading Animation */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.skeleton {
+    animation: shimmer 2s infinite linear;
+    background: linear-gradient(to right, #f6f7f8 4%, #edeef1 25%, #f6f7f8 36%);
+    background-size: 1000px 100%;
+}
+
+.skeleton-card {
+    border: none;
+    border-radius: var(--border-radius);
+    background: var(--card-bg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    margin-bottom: 2rem;
+    height: 100%;
+    display: block;
+}
+
+.skeleton-img {
+    height: 220px;
+    width: 100%;
+    background-color: #eee;
+}
+
+.skeleton-body {
+    padding: 1.5rem;
+}
+
+.skeleton-title {
+    height: 28px;
+    margin-bottom: 1rem;
+    width: 90%;
+    border-radius: 4px;
+}
+
+.skeleton-text {
+    height: 16px;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+}
+
+.skeleton-price {
+    height: 32px;
+    width: 40%;
+    margin-top: 1rem;
+    border-radius: 4px;
+}
+
+[data-bs-theme='dark'] .skeleton {
+    background: linear-gradient(to right, #2c3034 4%, #3a3f44 25%, #2c3034 36%);
+}
+[data-bs-theme='dark'] .skeleton-img {
+     background-color: #3a3f44;
+}
+
+/* Checkout Steps */
+.step-line {
+    width: 30px;
+    height: 2px;
+    background-color: #dee2e6;
+    margin: 0 10px;
+    transition: background-color 0.3s ease;
+}
+.step-line.active {
+    background-color: var(--primary-color);
+}
+.step-number {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    color: #495057;
+    text-align: center;
+    line-height: 24px;
+    font-size: 12px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+.step-number.active {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+
+[data-bs-theme='dark'] .skeleton {
+    background: linear-gradient(to right, #2c3034 4%, #3a3f44 25%, #2c3034 36%);
+}
+[data-bs-theme='dark'] .skeleton-img {
+     background-color: #3a3f44;
 }

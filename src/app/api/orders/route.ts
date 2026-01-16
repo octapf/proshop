@@ -7,11 +7,12 @@ import { protect } from '@/lib/authMiddleware';
 export async function POST(req: NextRequest) {
     await connectDB();
     
-    let user;
+    // Check for auth, but don't fail immediately if not present
+    let user = null;
     try {
         user = await protect(req);
-    } catch (error: any) {
-        return NextResponse.json({ message: error.message }, { status: 401 });
+    } catch (error) {
+        // Not authorized, but might be guest
     }
 
     const {
@@ -22,7 +23,13 @@ export async function POST(req: NextRequest) {
         taxPrice,
         shippingPrice,
         totalPrice,
+        guestInfo, // Receive guest info
     } = await req.json();
+
+    // If no user and no guest info, fail
+    if (!user && !guestInfo) {
+        return NextResponse.json({ message: 'Not authorized' }, { status: 401 });
+    }
 
     if (orderItems && orderItems.length === 0) {
         return NextResponse.json({ message: 'No order items' }, { status: 400 });
@@ -30,7 +37,8 @@ export async function POST(req: NextRequest) {
         const order = new Order({
             orderItems,
             // @ts-ignore
-            user: user._id,
+            user: user ? user._id : undefined,
+            guestInfo: guestInfo || undefined,
             shippingAddress,
             paymentMethod,
             itemsPrice,

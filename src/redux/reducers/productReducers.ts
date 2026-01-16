@@ -99,3 +99,42 @@ export const productReviewCreateReducer = (state = {}, action: Action) => {
 			return state
 	}
 }
+
+export const productTopRatedReducer = (state = { products: [] }, action: Action) => {
+	switch (action.type) {
+		case actions.PRODUCT_TOP_REQUEST:
+			return { loading: true, products: [] }
+		case actions.PRODUCT_TOP_SUCCESS:
+			return { loading: false, products: action.payload }
+		case actions.PRODUCT_TOP_FAIL:
+			return { loading: false, error: action.payload }
+		default:
+			return state
+	}
+}
+
+export const productRelatedReducer = (state = { products: [] }, action: Action) => {
+	switch (action.type) {
+		case actions.PRODUCT_RELATED_REQUEST:
+			return { loading: true, products: [] }
+		case actions.PRODUCT_RELATED_SUCCESS:
+			return { loading: false, products: action.payload }
+		case actions.PRODUCT_RELATED_FAIL:
+			return { loading: false, error: action.payload }
+		default:
+			return state
+	}
+}
+
+export const productFiltersReducer = (state = { filters: { categories: [], brands: [], maxPrice: 0 } }, action: Action) => {
+	switch (action.type) {
+		case actions.PRODUCT_FILTERS_REQUEST:
+			return { loading: true, filters: { categories: [], brands: [], maxPrice: 0 } }
+		case actions.PRODUCT_FILTERS_SUCCESS:
+			return { loading: false, filters: action.payload }
+		case actions.PRODUCT_FILTERS_FAIL:
+			return { loading: false, error: action.payload }
+		default:
+			return state
+	}
+}

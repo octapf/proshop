@@ -6,6 +6,7 @@ import store from '@/redux/store';
 import { useEffect } from 'react';
 import * as userConstants from '@/redux/constants/userConstants';
 import * as cartConstants from '@/redux/constants/cartConstants';
+import * as wishlistConstants from '@/redux/constants/wishlistConstants';
 
 export default function ReduxProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
@@ -44,6 +45,31 @@ export default function ReduxProvider({ children }: { children: React.ReactNode 
             store.dispatch({
                 type: cartConstants.CART_SAVE_SHIPPING_ADDRESS,
                 payload: shippingAddress,
+            });
+        }
+
+        const guestInfo = localStorage.getItem('guestInfo')
+            ? JSON.parse(localStorage.getItem('guestInfo') as string)
+            : null;
+
+        if (guestInfo) {
+            store.dispatch({
+                type: cartConstants.CART_SAVE_GUEST_INFO,
+                payload: guestInfo,
+            });
+        }
+
+        // Hydrate Wishlist
+        const wishlistItems = localStorage.getItem('wishlistItems')
+            ? JSON.parse(localStorage.getItem('wishlistItems') as string)
+            : [];
+
+        if (wishlistItems && wishlistItems.length > 0) {
+            wishlistItems.forEach((item: any) => {
+                store.dispatch({
+                    type: wishlistConstants.WISHLIST_ADD_ITEM,
+                    payload: item,
+                });
             });
         }
 

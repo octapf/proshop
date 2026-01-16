@@ -1,5 +1,7 @@
 # ProShop - Modern E-Commerce Platform
 
+**Live Demo:** [https://proshop-rosy.vercel.app](https://proshop-rosy.vercel.app)
+
 A full-featured, production-ready E-commerce application built with the latest web technologies. This project demonstrates a scalable architecture, secure payment processing, and a seamless user experience.
 
 ## 🚀 Tech Stack
@@ -11,19 +13,24 @@ A full-featured, production-ready E-commerce application built with the latest w
 - **Database**: [MongoDB](https://www.mongodb.com/) with Mongoose ODM
 - **Payments**: 
   - [PayPal](https://developer.paypal.com/)
-  - [Mercado Pago](https://www.mercadopago.com/)
 - **Internationalization**: next-intl
 
 ## ✨ Features
 
 ### 🛍️ User Features
-- **Product Catalog**: Browsing with pagination and search functionality.
-- **Shopping Cart**: Dynamic cart management.
-- **Checkout Process**: Multi-step checkout (Shipping, Payment Method, Confirmation).
-- **User Accounts**: Registration, login (Auth), and profile management.
-- **Order History**: View past orders and payment status.
+- **Smart Search**: Predictive search bar with typeahead suggestions and debounce.
+- **Advanced Filtering**: Dynamic Sidebar with Price Range, Category, Brand, and Rating filters.
+- **Product Gallery**: High-definition interactive gallery with hover zoom and thumbnail navigation.
+- **Related Products**: Intelligent suggestions of similar items on product detail pages.
+- **Wishlist**: Save favorite products for later (Persistent local storage).
+- **Shopping Cart**: Real-time cart management with instant updates.
+- **Guest Checkout**: Seamless purchasing experience without mandatory registration.
+- **Secure Checkout**: Multi-step process (Shipping, Payment, Confirmation) with PayPal/Credit Card integration.
+- **Newsletter**: Email subscription subsystem for marketing campaigns.
+- **User Accounts**: Full authentication system (Login/Register) with profile management.
+- **Order History**: Track past orders and view payment status.
 - **Reviews**: Product rating and review system.
-- **Multicurrency/Multilingual**: Support for EN/ES/IT (Architecture ready).
+- **Global Ready**: Multicurrency & Multilingual support (EN/ES/IT).
 
 ### 🛡️ Admin Features
 - **User Management**: View, edit, and delete users.

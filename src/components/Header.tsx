@@ -7,6 +7,7 @@ import { logout } from '@/redux/actions/userActions';
 import { Link, usePathname, useRouter } from '@/i18n/routing';
 import { useTranslations, useLocale } from 'next-intl';
 import { useTheme } from './ThemeProvider';
+import SearchBox from './SearchBox';
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -30,11 +31,12 @@ const Header = () => {
 
     return (
         <header>
-            <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
+            <Navbar className="glass-navbar ms-auto" variant='dark' expand='lg' collapseOnSelect>
                 <Container>
                     <Navbar.Brand as={Link} href="/">{t('title')}</Navbar.Brand>
                     <Navbar.Toggle aria-controls='basic-navbar-nav' />
                      <Navbar.Collapse id='basic-navbar-nav'>
+                        <SearchBox />
                         <Nav className='ms-auto'>
                              <Nav.Link onClick={toggleTheme}>
                                 <i className={theme === 'light' ? 'fas fa-moon' : 'fas fa-sun'}></i>
@@ -44,6 +46,10 @@ const Header = () => {
                                 <NavDropdown.Item onClick={() => changeLanguage('es')}>Español</NavDropdown.Item>
                                 <NavDropdown.Item onClick={() => changeLanguage('it')}>Italiano</NavDropdown.Item>
                              </NavDropdown>
+
+                            <Nav.Link as={Link} href="/wishlist">
+                                <i className='fas fa-heart'></i> Wishlist
+                            </Nav.Link>
 
                             <Nav.Link as={Link} href="/cart">
                                 <i className='fas fa-shopping-cart'></i> {t('cart')}

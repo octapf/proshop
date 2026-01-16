@@ -42,60 +42,72 @@ const CartContent = () => {
     return (
         <Row>
 			<Col md={8}>
-				<h1>Shopping Cart</h1>
+				<h1 className="mb-4">Shopping Cart</h1>
 				{cartItems.length === 0 ? (
 					<Message>
 						Your cart is empty, <Link href='/'>Go Back</Link>
 					</Message>
 				) : (
-					<ListGroup variant='flush'>
+                    <div className="cart-items">
 						{cartItems.map((item: any) => (
-							<ListGroup.Item key={item.product}>
-								<Row>
-									<Col md={2}>
-										<Image src={item.image} alt={item.name} fluid rounded />
-									</Col>
-									<Col md={3}>
-										<Link href={`/product/${item.product}`}>{item.name}</Link>
-									</Col>
-									<Col md={2}>$ {item.price.toFixed(2)}</Col>
-									<Col md={2}>
-										<Form.Control
-											as='select'
-											value={item.qty}
-											onChange={(e) =>
-                                                // @ts-ignore
-												dispatch(addToCart(item.product, Number(e.target.value)))
-											}
-										>
-											{[...Array(item.countInStock).keys()].map((x) => (
-												<option key={x + 1} value={x + 1}>
-													{x + 1}
-												</option>
-											))}
-										</Form.Control>
-									</Col>
-									<Col md={2}>
-										<Button
-											type='button'
-											variant='light'
-											onClick={() => removeFromCartHandler(item.product)}
-										>
-											<i className='fas fa-trash'></i>
-										</Button>
-									</Col>
-								</Row>
-							</ListGroup.Item>
+                            <Card key={item.product} className="mb-3 border-0 shadow-sm rounded-4 overflow-hidden">
+                                <Card.Body className="p-0">
+                                    <Row className="align-items-center g-0">
+                                        <Col md={3} className="p-3 bg-light d-flex align-items-center justify-content-center">
+                                            <Image src={item.image} alt={item.name} fluid rounded style={{ maxHeight: '100px', objectFit: 'contain' }} />
+                                        </Col>
+                                        <Col md={9} className="p-3">
+                                            <Row className="align-items-center">
+                                                <Col md={5}>
+                                                    <Link href={`/product/${item.product}`} className="text-decoration-none fw-bold text-dark stretch-link-z-index">
+                                                        {item.name}
+                                                    </Link>
+                                                </Col>
+                                                <Col md={2} className="text-muted fw-semibold">
+                                                    $ {item.price.toFixed(2)}
+                                                </Col>
+                                                <Col md={3}>
+                                                    <Form.Select
+                                                        value={item.qty}
+                                                        onChange={(e) =>
+                                                            // @ts-ignore
+                                                            dispatch(addToCart(item.product, Number(e.target.value)))
+                                                        }
+                                                        className="form-select-sm border-0 bg-light"
+                                                        style={{ cursor: 'pointer' }}
+                                                    >
+                                                        {[...Array(item.countInStock).keys()].map((x) => (
+                                                            <option key={x + 1} value={x + 1}>
+                                                                {x + 1}
+                                                            </option>
+                                                        ))}
+                                                    </Form.Select>
+                                                </Col>
+                                                <Col md={2} className="text-end">
+                                                    <Button
+                                                        type='button'
+                                                        variant='light'
+                                                        className="text-danger rounded-circle p-2"
+                                                        onClick={() => removeFromCartHandler(item.product)}
+                                                    >
+                                                        <i className='fas fa-trash'></i>
+                                                    </Button>
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                    </Row>
+                                </Card.Body>
+                            </Card>
 						))}
-					</ListGroup>
+                    </div>
 				)}
 			</Col>
 
-			<Col md={4}>
-				<Card>
+			<Col md={4} className="mt-4 mt-md-0">
+				<Card className="border-0 shadow-lg rounded-4 sticky-top" style={{ top: '100px' }}>
 					<ListGroup variant='flush'>
-						<ListGroup.Item>
-							<h2>
+						<ListGroup.Item className="bg-white border-0 pt-4 px-4">
+							<h2 className="fs-4 fw-bold">
 								SubTotal ({cartItems.reduce((acc: number, item: any) => acc + item.qty, 0)})
 								items
 							</h2>
@@ -107,10 +119,10 @@ const CartContent = () => {
 								)
 								.toFixed(2)}
 						</ListGroup.Item>
-						<ListGroup.Item>
+						<ListGroup.Item className="bg-white border-0 pb-4 px-4">
 							<Button
 								type='button'
-								className='btn-block'
+								className='btn-block w-100 rounded-pill'
                                 disabled={cartItems.length === 0}
 								onClick={() => checkoutHandler()}
 							>

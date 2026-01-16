@@ -9,21 +9,30 @@ export const createOrder = (order: any) => async (dispatch: any, getState: any) 
 		})
 
 		const {
-			userLogin: {
-				userInfo: { token },
-			},
+			userLogin: { userInfo },
+            cart: { guestInfo }
 		} = getState()
 
-		const config = {
+        const config = {
 			headers: {
 				'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
 			},
 		}
 
+        if (userInfo && userInfo.token) {
+             // @ts-ignore
+             config.headers.Authorization = `Bearer ${userInfo.token}`;
+        }
+        
+        // Inject guestInfo into order object if exists and no user
+        const orderData = {
+            ...order,
+            guestInfo: (!userInfo && guestInfo) ? guestInfo : undefined
+        };
+
 		const { data } = await axios.post(
 			'/api/orders',
-			order,
+			orderData,
 			config
 		)
 

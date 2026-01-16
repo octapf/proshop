@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import { Form, Button, Row, Col, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '@/components/Message'
 import Loader from '@/components/Loader'
@@ -51,64 +51,72 @@ const RegisterContent = () => {
 
 	return (
 		<FormContainer>
-			<h1>Sign Up</h1>
-			{message && <Message variant='danger'>{message}</Message>}
-			{error && <Message variant='danger'>{error}</Message>}
-			{loading && <Loader />}
-			<Form onSubmit={submitHandler}>
-				<Form.Group controlId='name'>
-					<Form.Label>Name</Form.Label>
-					<Form.Control
-						type='name'
-						placeholder='Enter name'
-						value={name}
-						onChange={(e) => setName(e.target.value)}
-					></Form.Control>
-				</Form.Group>
+            <Card className="shadow-lg rounded-4 border-0 overflow-hidden">
+                <Card.Body className="p-5">
+                    <h1 className="text-center mb-4 fw-bold font-poppins">Sign Up</h1>
+                    {message && <Message variant='danger'>{message}</Message>}
+                    {error && <Message variant='danger'>{error}</Message>}
+                    {loading && <Loader />}
+                    <Form onSubmit={submitHandler}>
+                        <Form.Group controlId='name' className="mb-3">
+                            <Form.Label className="fw-semibold">Name</Form.Label>
+                            <Form.Control
+                                type='name'
+                                placeholder='Enter name'
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                className="rounded-pill px-3 py-2 border-light shadow-sm bg-light"
+                            ></Form.Control>
+                        </Form.Group>
 
-				<Form.Group controlId='email'>
-					<Form.Label>Email Address</Form.Label>
-					<Form.Control
-						type='email'
-						placeholder='Enter email'
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-					></Form.Control>
-				</Form.Group>
+                        <Form.Group controlId='email' className="mb-3">
+                            <Form.Label className="fw-semibold">Email Address</Form.Label>
+                            <Form.Control
+                                type='email'
+                                placeholder='Enter email'
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="rounded-pill px-3 py-2 border-light shadow-sm bg-light"
+                            ></Form.Control>
+                        </Form.Group>
 
-				<Form.Group controlId='password'>
-					<Form.Label>Password</Form.Label>
-					<Form.Control
-						type='password'
-						placeholder='Enter password'
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-					></Form.Control>
-				</Form.Group>
+                        <Form.Group controlId='password' className="mb-3">
+                            <Form.Label className="fw-semibold">Password</Form.Label>
+                            <Form.Control
+                                type='password'
+                                placeholder='Enter password'
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="rounded-pill px-3 py-2 border-light shadow-sm bg-light"
+                            ></Form.Control>
+                        </Form.Group>
 
-				<Form.Group controlId='confirmPassword'>
-					<Form.Label>Confirm Password</Form.Label>
-					<Form.Control
-						type='password'
-						placeholder='Confirm password'
-						value={confirmPassword}
-						onChange={(e) => setConfirmPassword(e.target.value)}
-					></Form.Control>
-				</Form.Group>
+                        <Form.Group controlId='confirmPassword' className="mb-4">
+                            <Form.Label className="fw-semibold">Confirm Password</Form.Label>
+                            <Form.Control
+                                type='password'
+                                placeholder='Confirm password'
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                className="rounded-pill px-3 py-2 border-light shadow-sm bg-light"
+                            ></Form.Control>
+                        </Form.Group>
 
-				<Button type='submit' variant='primary'>
-					Register
-				</Button>
-			</Form>
-
-			<Row className='py-3'>
-				<Col>
-					Have an Account?{' '}
-                    <Link href={redirect ? `/login?redirect=${redirect}` : '/login'}>
+                        <Button type='submit' variant='primary' className="w-100 rounded-pill py-2 shadow fw-bold">
+                            Register
+                        </Button>
+                    </Form>
+                </Card.Body>
+                <Card.Footer className="text-center py-4 bg-light border-0">
+                    <span className="text-muted">Have an Account? </span>
+                    <Link 
+                        href={redirect ? `/login?redirect=${redirect}` : '/login'}
+                        className="text-decoration-none fw-bold"
+                    >
                         Login
                     </Link>
-				</Col>
-			</Row>
+                </Card.Footer>
+            </Card>
 		</FormContainer>
 	)
 }
