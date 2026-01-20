@@ -45,7 +45,7 @@ export default function Home() {
     <>
       <h1>{t('latestProducts')}</h1>
       <Row>
-        <Col md={3} className="d-none d-md-block">
+        <Col md={3} className="mb-3">
           <FilterSidebar />
         </Col>
         <Col md={9}>
