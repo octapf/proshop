@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap';
+import { Row, Col, ListGroup, Card, Button, Form } from 'react-bootstrap';
 import Rating from '@/components/Rating';
 import Loader from '@/components/Loader';
 import Message from '@/components/Message';
@@ -19,8 +19,8 @@ const ProductScreen = () => {
   const { id } = params;
 
   const [qty, setQty] = useState(1);
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState('');
+  // const [rating, setRating] = useState(0);
+  // const [comment, setComment] = useState('');
 
   const dispatch = useDispatch();
 

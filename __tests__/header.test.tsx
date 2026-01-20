@@ -38,7 +38,7 @@ describe('Header Component', () => {
 
   // 16. Render Brand
   it('renders brand title correctly', () => {
-    (reactRedux.useSelector as unknown as jest.Mock).mockImplementation((selector) => {
+    (reactRedux.useSelector as unknown as jest.Mock).mockImplementation(() => {
       // We need to match the specific selector calls.
       // Ideally we mock the state shape completely.
       return {

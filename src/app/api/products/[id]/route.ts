@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from 'next/server';
 import connectDB from '@/lib/db';
 import Product from '@/models/productModel';
 import { protect } from '@/lib/authMiddleware';
+import { productSchema } from '@/lib/validators/product';
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   await connectDB();
@@ -55,7 +56,14 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 
   if (user && user.isAdmin) {
     const { id } = await params;
-    const { name, price, description, image, brand, category, countInStock } = await req.json();
+    const body = await req.json();
+
+    const validation = productSchema.safeParse(body);
+    if (!validation.success) {
+      return NextResponse.json({ message: validation.error.errors[0].message }, { status: 400 });
+    }
+
+    const { name, price, description, image, brand, category, countInStock } = validation.data;
 
     // @ts-ignore
     const product = await Product.findById(id);

@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Row, Col, Table } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import LinkContainer from 'next/link';
 import { useRouter } from 'next/navigation';
 import { getUserDetails, updateUserProfile } from '@/redux/actions/userActions';
 import { listMyOrders } from '@/redux/actions/orderActions';
@@ -43,12 +42,16 @@ const ProfileScreen = () => {
         dispatch(getUserDetails('profile'));
         // @ts-ignore
         dispatch(listMyOrders());
-      } else {
-        setName(user.name);
-        setEmail(user.email);
       }
     }
   }, [dispatch, router, userInfo, user, success]);
+
+  useEffect(() => {
+    if (user && user.name) {
+      setName(user.name);
+      setEmail(user.email);
+    }
+  }, [user]);
 
   const submitHandler = (e: any) => {
     e.preventDefault();

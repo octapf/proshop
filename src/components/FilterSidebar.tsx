@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Accordion, Form, Button, FormCheck } from 'react-bootstrap';
+import { Accordion, Form, Button } from 'react-bootstrap';
 import { listProductFilters } from '@/redux/actions/productActions';
 import { useRouter, useSearchParams } from 'next/navigation';
 
@@ -11,7 +11,7 @@ const FilterSidebar = () => {
   const searchParams = useSearchParams();
 
   const productFilters = useSelector((state: any) => state.productFilters);
-  const { loading, error, filters } = productFilters;
+  const { filters } = productFilters;
 
   const [priceRange, setPriceRange] = useState([0, 1000]);
   const [selectedCategory, setSelectedCategory] = useState('');

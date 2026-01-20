@@ -2,7 +2,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
-import { Row, Col, ListGroup, Button, Card, Image } from 'react-bootstrap';
+import { Row, Col, ListGroup, Button, Image } from 'react-bootstrap';
 import { removeFromWishlist } from '@/redux/actions/wishlistActions';
 import { addToCart } from '@/redux/actions/cartActions';
 import Message from '@/components/Message';

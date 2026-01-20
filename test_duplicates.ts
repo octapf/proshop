@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import User from './src/models/userModel';
 import connectDB from './src/lib/db';
 import dotenv from 'dotenv';

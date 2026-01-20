@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
 import Product from '@/components/Product';
-import Loader from '@/components/Loader';
+// import Loader from '@/components/Loader';
 import ProductSkeleton from '@/components/ProductSkeleton';
 import Message from '@/components/Message';
 import FilterSidebar from '@/components/FilterSidebar';

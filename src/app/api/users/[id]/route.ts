@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from 'next/server';
 import connectDB from '@/lib/db';
 import User from '@/models/userModel';
 import { protect } from '@/lib/authMiddleware';
+import { userAdminUpdateSchema } from '@/lib/validators/auth';
 
 export async function DELETE(req: NextRequest, props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
@@ -69,7 +70,14 @@ export async function PUT(req: NextRequest, props: { params: Promise<{ id: strin
     const userToUpdate = await User.findById(id);
 
     if (userToUpdate) {
-      const { name, email, isAdmin } = await req.json();
+      const body = await req.json();
+
+      const validation = userAdminUpdateSchema.safeParse(body);
+      if (!validation.success) {
+        return NextResponse.json({ message: validation.error.errors[0].message }, { status: 400 });
+      }
+
+      const { name, email, isAdmin } = validation.data;
 
       userToUpdate.name = name || userToUpdate.name;
       userToUpdate.email = email || userToUpdate.email;

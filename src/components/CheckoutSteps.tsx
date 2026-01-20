@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Nav, Row } from 'react-bootstrap';
+import { Nav } from 'react-bootstrap';
 import Link from 'next/link';
 
 const CheckoutSteps = ({ step1, step2, step3, step4 }: any) => {

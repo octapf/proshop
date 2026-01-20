@@ -46,4 +46,11 @@ describe('Rating Component', () => {
     const firstStar = container.querySelector('i');
     expect(firstStar).toHaveStyle(`color: ${color}`);
   });
+
+  it('renders correctly with 0 value and no text', () => {
+    const { container } = render(<Rating value={0} />);
+    const emptyStars = container.querySelectorAll('.far.fa-star');
+    expect(emptyStars.length).toBe(5);
+    expect(screen.queryByText('reviews')).not.toBeInTheDocument();
+  });
 });

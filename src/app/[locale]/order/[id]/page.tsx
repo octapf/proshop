@@ -14,9 +14,6 @@ import { useParams, useRouter } from 'next/navigation';
 const OrderScreen = () => {
   const params = useParams();
   const router = useRouter();
-  // @ts-ignore
-  const searchParams =
-    typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
   const orderId = params?.id as string;
   const dispatch = useDispatch();
 
@@ -34,16 +31,17 @@ const OrderScreen = () => {
   const orderDeliver = useSelector((state: any) => state.orderDeliver);
   const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
 
-  if (!loading) {
-    //   Calculate prices
-    const addDecimals = (num: number) => {
-      return (Math.round(num * 100) / 100).toFixed(2);
-    };
+  const addDecimals = (num: number) => {
+    return (Math.round(num * 100) / 100).toFixed(2);
+  };
 
-    order.itemsPrice = addDecimals(
-      order.orderItems.reduce((acc: any, item: any) => acc + item.price * item.qty, 0)
-    );
-  }
+   
+  const orderItemsPrice =
+    !loading && order
+      ? addDecimals(
+          order.orderItems.reduce((acc: any, item: any) => acc + item.price * item.qty, 0)
+        )
+      : 0;
 
   useEffect(() => {
     if (!userInfo) {
@@ -156,7 +154,7 @@ const OrderScreen = () => {
               <ListGroup.Item>
                 <Row>
                   <Col>Items</Col>
-                  <Col>${order.itemsPrice}</Col>
+                  <Col>${orderItemsPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>

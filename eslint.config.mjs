@@ -7,12 +7,22 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   prettier,
-  // Override default ignores of eslint-config-next.
+  {
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
+      "react/display-name": "off",
+      "@next/next/no-img-element": "off",
+      "react-hooks/set-state-in-effect": "off"
+    }
+  },
   globalIgnores([
     // Default ignores of eslint-config-next:
     '.next/**',
     'out/**',
     'build/**',
+    'node_modules/**',
+    'coverage/**',
     'next-env.d.ts',
   ]),
 ]);

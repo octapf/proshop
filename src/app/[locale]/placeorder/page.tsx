@@ -32,19 +32,15 @@ const PlaceOrderScreen = () => {
     return (Math.round(num * 100) / 100).toFixed(2);
   };
 
-  cart.itemsPrice = addDecimals(
+  const itemsPrice = addDecimals(
     Number(cart.cartItems.reduce((acc: any, cur: any) => acc + cur.price * cur.qty, 0).toFixed(2))
   );
 
-  cart.shippingPrice = addDecimals(Number(cart.itemsPrice) > 100 ? 0 : 100);
+  const shippingPrice = addDecimals(Number(itemsPrice) > 100 ? 0 : 100);
 
-  cart.taxPrice = addDecimals(Number((Number(cart.itemsPrice) * 0.15).toFixed(2)));
+  const taxPrice = addDecimals(Number((Number(itemsPrice) * 0.15).toFixed(2)));
 
-  cart.totalPrice = (
-    Number(cart.itemsPrice) +
-    Number(cart.shippingPrice) +
-    Number(cart.taxPrice)
-  ).toFixed(2);
+  const totalPrice = (Number(itemsPrice) + Number(shippingPrice) + Number(taxPrice)).toFixed(2);
 
   useEffect(() => {
     if (success) {
@@ -61,10 +57,10 @@ const PlaceOrderScreen = () => {
         orderItems: cart.cartItems,
         shippingAddress: cart.shippingAddress,
         paymentMethod: cart.paymentMethod,
-        itemsPrice: cart.itemsPrice,
-        shippingPrice: cart.shippingPrice,
-        taxPrice: cart.taxPrice,
-        totalPrice: cart.totalPrice,
+        itemsPrice: itemsPrice,
+        shippingPrice: shippingPrice,
+        taxPrice: taxPrice,
+        totalPrice: totalPrice,
       })
     );
   };
@@ -141,28 +137,28 @@ const PlaceOrderScreen = () => {
               <ListGroup.Item className="px-4 py-3">
                 <Row>
                   <Col className="text-secondary">Items</Col>
-                  <Col className="fw-bold">${cart.itemsPrice}</Col>
+                  <Col className="fw-bold">${itemsPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
               <ListGroup.Item className="px-4 py-3">
                 <Row>
                   <Col className="text-secondary">Shipping</Col>
-                  <Col className="fw-bold">${cart.shippingPrice}</Col>
+                  <Col className="fw-bold">${shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
               <ListGroup.Item className="px-4 py-3">
                 <Row>
                   <Col className="text-secondary">Tax</Col>
-                  <Col className="fw-bold">${cart.taxPrice}</Col>
+                  <Col className="fw-bold">${taxPrice}</Col>
                 </Row>
               </ListGroup.Item>
 
               <ListGroup.Item className="px-4 py-3 bg-light">
                 <Row className="align-items-center">
                   <Col className="text-uppercase fw-bold text-dark">Total</Col>
-                  <Col className="fs-4 fw-bold text-primary">${cart.totalPrice}</Col>
+                  <Col className="fs-4 fw-bold text-primary">${totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
 

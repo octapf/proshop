@@ -11,6 +11,7 @@
     "data:import": "npx tsx seeder.ts",
     "data:destroy": "npx tsx seeder.ts -d",
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
     "prepare": "husky"
   },
@@ -40,7 +41,8 @@
     "react-dom": "19.2.3",
     "react-redux": "^9.2.0",
     "redux": "^5.0.1",
-    "redux-thunk": "^3.1.0"
+    "redux-thunk": "^3.1.0",
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",

@@ -8,10 +8,9 @@ import Paginate from '@/components/Paginate';
 import { listProducts, deleteProduct, createProduct } from '@/redux/actions/productActions';
 import { PRODUCT_CREATE_RESET } from '@/redux/constants/productConstants';
 import Link from 'next/link';
-import { useRouter, useParams, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const ProductListContent = () => {
-  const params = useParams();
   const searchParams = useSearchParams();
   const pageNumber = searchParams.get('pageNumber') || 1;
   const router = useRouter();

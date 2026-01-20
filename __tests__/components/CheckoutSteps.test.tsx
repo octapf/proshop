@@ -61,7 +61,7 @@ describe('CheckoutSteps Component', () => {
     // <Nav.Item> ... href='/shipping' ... {step3 ? <i ...> : <span>2</span>} Shipping </Nav.Item>
     // So if step3 is passed, the Shipping link shows a checkmark icon.
 
-    const link2 = screen.getByRole('link', { name: /shipping/i });
+    screen.getByRole('link', { name: /shipping/i });
     // We expect the icon inside. Querying by class is tricky in RTL.
     // But we can check if "2" is NOT present.
     expect(screen.queryByText('2')).not.toBeInTheDocument();

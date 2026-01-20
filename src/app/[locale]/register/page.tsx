@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
-import { Form, Button, Row, Col, Card } from 'react-bootstrap';
+import { Form, Button, Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '@/components/Message';
 import Loader from '@/components/Loader';

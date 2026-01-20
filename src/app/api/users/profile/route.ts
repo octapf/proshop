@@ -1,8 +1,8 @@
 import { NextResponse, NextRequest } from 'next/server';
 import connectDB from '@/lib/db';
-import User from '@/models/userModel';
 import { protect } from '@/lib/authMiddleware';
 import generateToken from '@/lib/generateToken';
+import { userUpdateSchema } from '@/lib/validators/auth';
 
 export async function GET(req: NextRequest) {
   await connectDB();
@@ -27,7 +27,14 @@ export async function PUT(req: NextRequest) {
   try {
     const user = await protect(req);
     if (user) {
-      const { name, email, password } = await req.json();
+      const body = await req.json();
+
+      const validation = userUpdateSchema.safeParse(body);
+      if (!validation.success) {
+        return NextResponse.json({ message: validation.error.errors[0].message }, { status: 400 });
+      }
+
+      const { name, email, password } = validation.data;
 
       user.name = name || user.name;
       user.email = email || user.email;
