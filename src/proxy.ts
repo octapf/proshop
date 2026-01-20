@@ -27,7 +27,7 @@ function isRateLimited(ip: string) {
   return false;
 }
 
-export default function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // 1. Rate Limiting for Auth Routes
