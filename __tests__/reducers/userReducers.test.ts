@@ -38,7 +38,7 @@ describe('userReducers', () => {
         type: actions.USER_LOGIN_FAIL,
         payload: error,
       });
-      expect(state).toEqual({ userInfo: null, loading: false, error });
+      expect(state).toEqual({ userInfo: null, loading: false, error, validationErrors: null });
     });
 
     it('should handle USER_LOGOUT', () => {
@@ -80,7 +80,7 @@ describe('userReducers', () => {
         type: actions.USER_REGISTER_FAIL,
         payload: error,
       });
-      expect(state).toEqual({ userInfo: null, loading: false, error });
+      expect(state).toEqual({ userInfo: null, loading: false, error, validationErrors: null });
     });
   });
 
@@ -151,7 +151,13 @@ describe('userReducers', () => {
         type: actions.USER_UPDATE_PROFILE_FAIL,
         payload: error,
       });
-      expect(state).toEqual({ userInfo: {}, loading: false, success: false, error });
+      expect(state).toEqual({
+        userInfo: {},
+        loading: false,
+        success: false,
+        error,
+        validationErrors: null,
+      });
     });
 
     it('should handle USER_UPDATE_PROFILE_RESET', () => {

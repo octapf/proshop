@@ -26,7 +26,7 @@ export const LoginContent = () => {
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state: any) => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
+  const { loading, error, userInfo, validationErrors } = userLogin;
 
   const redirect = searchParams.get('redirect') ? searchParams.get('redirect') : '/';
 
@@ -68,7 +68,11 @@ export const LoginContent = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="rounded-pill px-3 py-2 border-light shadow-sm bg-light"
+                isInvalid={!!validationErrors?.email}
               ></Form.Control>
+              <Form.Control.Feedback type="invalid">
+                {validationErrors?.email?.[0]}
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group controlId="password" className="mb-4">
@@ -79,7 +83,11 @@ export const LoginContent = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="rounded-pill px-3 py-2 border-light shadow-sm bg-light"
+                isInvalid={!!validationErrors?.password}
               ></Form.Control>
+              <Form.Control.Feedback type="invalid">
+                {validationErrors?.password?.[0]}
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Button

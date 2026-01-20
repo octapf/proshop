@@ -12,7 +12,14 @@ export const orderCreateReducer = (state = { order: {} }, action: Action) => {
     case actions.ORDER_CREATE_SUCCESS:
       return { loading: false, success: true, order: action.payload };
     case actions.ORDER_CREATE_FAIL:
-      return { ...state, loading: false, success: false, error: action.payload };
+      const failPayload = action.payload;
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: failPayload.message || failPayload,
+        validationErrors: failPayload.errors || null,
+      };
 
     default:
       return state;

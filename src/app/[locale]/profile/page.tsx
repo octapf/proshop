@@ -24,7 +24,7 @@ const ProfileScreen = () => {
   const { loading, user, error } = userDetails;
 
   const userUpdateProfile = useSelector((state: any) => state.userUpdateProfile);
-  const { success } = userUpdateProfile;
+  const { success, error: errorUpdate, validationErrors } = userUpdateProfile;
 
   const userLogin = useSelector((state: any) => state.userLogin);
   const { userInfo } = userLogin;
@@ -69,6 +69,7 @@ const ProfileScreen = () => {
         <h2>User Profile</h2>
         {message && <Message variant="danger">{message}</Message>}
         {error && <Message variant="danger">{error}</Message>}
+        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {success && <Message variant="success">Profile Updated</Message>}
         {loading && <Loader />}
 
@@ -80,7 +81,11 @@ const ProfileScreen = () => {
               placeholder="Enter Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              isInvalid={!!validationErrors?.name}
             ></Form.Control>
+            <Form.Control.Feedback type="invalid">
+              {validationErrors?.name?.[0]}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="email">
@@ -90,7 +95,11 @@ const ProfileScreen = () => {
               placeholder="Enter Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              isInvalid={!!validationErrors?.email}
             ></Form.Control>
+            <Form.Control.Feedback type="invalid">
+              {validationErrors?.email?.[0]}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="password">
@@ -100,7 +109,11 @@ const ProfileScreen = () => {
               placeholder="Enter Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              isInvalid={!!validationErrors?.password}
             ></Form.Control>
+            <Form.Control.Feedback type="invalid">
+              {validationErrors?.password?.[0]}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="confirmPassword">

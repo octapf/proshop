@@ -31,7 +31,10 @@ export async function PUT(req: NextRequest) {
 
       const validation = userUpdateSchema.safeParse(body);
       if (!validation.success) {
-        return NextResponse.json({ message: validation.error.errors[0].message }, { status: 400 });
+        return NextResponse.json(
+          { message: 'Validation failed', errors: validation.error.flatten().fieldErrors },
+          { status: 400 }
+        );
       }
 
       const { name, email, password } = validation.data;

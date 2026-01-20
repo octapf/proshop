@@ -23,7 +23,7 @@ export const RegisterContent = () => {
   const dispatch = useDispatch();
 
   const userRegister = useSelector((state: any) => state.userRegister);
-  const { loading, error, userInfo } = userRegister;
+  const { loading, error, userInfo, validationErrors } = userRegister;
 
   // Check userLogin state as well in case they are logged in
   const userLogin = useSelector((state: any) => state.userLogin);
@@ -66,9 +66,14 @@ export const RegisterContent = () => {
                 placeholder="Enter name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="form-control rounded-pill px-3 py-2 border-light shadow-sm bg-light"
+                className={`form-control rounded-pill px-3 py-2 border-light shadow-sm bg-light ${
+                  validationErrors?.name ? 'is-invalid' : ''
+                }`}
                 id="name"
               />
+              {validationErrors?.name && (
+                <div className="invalid-feedback d-block ms-2">{validationErrors.name[0]}</div>
+              )}
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -80,9 +85,14 @@ export const RegisterContent = () => {
                 placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="form-control rounded-pill px-3 py-2 border-light shadow-sm bg-light"
+                className={`form-control rounded-pill px-3 py-2 border-light shadow-sm bg-light ${
+                  validationErrors?.email ? 'is-invalid' : ''
+                }`}
                 id="email"
               />
+              {validationErrors?.email && (
+                <div className="invalid-feedback d-block ms-2">{validationErrors.email[0]}</div>
+              )}
             </Form.Group>
 
             <Form.Group className="mb-3">
@@ -94,9 +104,14 @@ export const RegisterContent = () => {
                 placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="form-control rounded-pill px-3 py-2 border-light shadow-sm bg-light"
+                className={`form-control rounded-pill px-3 py-2 border-light shadow-sm bg-light ${
+                  validationErrors?.password ? 'is-invalid' : ''
+                }`}
                 id="password"
               />
+              {validationErrors?.password && (
+                <div className="invalid-feedback d-block ms-2">{validationErrors.password[0]}</div>
+              )}
             </Form.Group>
 
             <Form.Group className="mb-4">

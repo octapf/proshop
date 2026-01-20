@@ -14,7 +14,13 @@ export const userLoginReducer = (state = { userInfo: null }, action: Action) => 
       return { loading: false, userInfo: action.payload };
 
     case actions.USER_LOGIN_FAIL:
-      return { ...state, loading: false, error: action.payload };
+      const failPayload = action.payload;
+      return {
+        ...state,
+        loading: false,
+        error: failPayload.message || failPayload,
+        validationErrors: failPayload.errors || null,
+      };
     case actions.USER_LOGOUT:
       return { userInfo: null };
 
@@ -30,7 +36,13 @@ export const userRegisterReducer = (state = { userInfo: null }, action: Action) 
     case actions.USER_REGISTER_SUCCESS:
       return { loading: false, userInfo: action.payload };
     case actions.USER_REGISTER_FAIL:
-      return { ...state, loading: false, error: action.payload };
+      const failPayload = action.payload;
+      return {
+        ...state,
+        loading: false,
+        error: failPayload.message || failPayload,
+        validationErrors: failPayload.errors || null,
+      };
     default:
       return state;
   }
@@ -61,7 +73,14 @@ export const userUpdateProfileReducer = (state = { userInfo: {} }, action: Actio
     case actions.USER_UPDATE_PROFILE_SUCCESS:
       return { loading: false, success: true, userInfo: action.payload };
     case actions.USER_UPDATE_PROFILE_FAIL:
-      return { ...state, loading: false, success: false, error: action.payload };
+      const failPayload = action.payload;
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: failPayload.message || failPayload,
+        validationErrors: failPayload.errors || null,
+      };
 
     case actions.USER_UPDATE_PROFILE_RESET:
       return { userInfo: {} };

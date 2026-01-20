@@ -24,6 +24,7 @@ const ProductEditScreen = () => {
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
 
   const dispatch = useDispatch<any>();
 
@@ -58,6 +59,7 @@ const ProductEditScreen = () => {
     const formData = new FormData();
     formData.append('image', file);
     setUploading(true);
+    setUploadError(null);
 
     try {
       const config = {
@@ -70,9 +72,12 @@ const ProductEditScreen = () => {
 
       setImage(data.filePath);
       setUploading(false);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       setUploading(false);
+      setUploadError(
+        error.response && error.response.data.error ? error.response.data.error : error.message
+      );
     }
   };
 
@@ -150,6 +155,7 @@ const ProductEditScreen = () => {
                 onChange={uploadFileHandler}
               />
               {uploading && <Loader />}
+              {uploadError && <Message variant="danger">{uploadError}</Message>}
             </Form.Group>
 
             <Form.Group controlId="brand">

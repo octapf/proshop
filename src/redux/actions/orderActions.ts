@@ -38,8 +38,7 @@ export const createOrder = (order: any) => async (dispatch: any, getState: any) 
   } catch (error: any) {
     dispatch({
       type: actions.ORDER_CREATE_FAIL,
-      payload:
-        error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload: error.response && error.response.data.message ? error.response.data : error.message,
     });
   }
 };

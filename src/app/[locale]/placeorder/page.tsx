@@ -23,7 +23,7 @@ const PlaceOrderScreen = () => {
   }
 
   const orderCreate = useSelector((state: any) => state.orderCreate);
-  const { order, success, error } = orderCreate || {};
+  const { order, success, error, validationErrors } = orderCreate || {};
 
   // const { userInfo } = useSelector((state: any) => state.userLogin)
 
@@ -164,6 +164,17 @@ const PlaceOrderScreen = () => {
 
               <ListGroup.Item className="px-4">
                 {error && <Message variant="danger">{error}</Message>}
+                {validationErrors && (
+                  <Message variant="danger">
+                    <ul className="mb-0 ps-3">
+                      {Object.entries(validationErrors).map(([key, msgs]: [string, any]) => (
+                        <li key={key}>
+                          {key}: {Array.isArray(msgs) ? msgs.join(', ') : msgs}
+                        </li>
+                      ))}
+                    </ul>
+                  </Message>
+                )}
               </ListGroup.Item>
 
               <ListGroup.Item className="p-4">

@@ -12,7 +12,10 @@ export async function POST(req: NextRequest) {
     // Validate request body
     const result = loginSchema.safeParse(body);
     if (!result.success) {
-      return NextResponse.json({ message: result.error.errors[0].message }, { status: 400 });
+      return NextResponse.json(
+        { message: 'Validation failed', errors: result.error.flatten().fieldErrors },
+        { status: 400 }
+      );
     }
 
     const { email, password } = result.data;

@@ -32,8 +32,7 @@ export const login = (email: string, password: string) => async (dispatch: any) 
   } catch (error: any) {
     dispatch({
       type: userActions.USER_LOGIN_FAIL,
-      payload:
-        error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload: error.response && error.response.data.message ? error.response.data : error.message,
     });
   }
 };
@@ -68,8 +67,7 @@ export const logout = () => async (dispatch: any) => {
   } catch (error: any) {
     dispatch({
       type: userActions.USER_LOGIN_FAIL,
-      payload:
-        error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload: error.response && error.response.data.message ? error.response.data : error.message,
     });
   }
 };
@@ -112,9 +110,7 @@ export const register =
       dispatch({
         type: userActions.USER_REGISTER_FAIL,
         payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+          error.response && error.response.data.message ? error.response.data : error.message,
       });
     }
   };
@@ -188,8 +184,7 @@ export const updateUserProfile = (user: any) => async (dispatch: any, getState: 
   } catch (error: any) {
     dispatch({
       type: userActions.USER_UPDATE_PROFILE_FAIL,
-      payload:
-        error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload: error.response && error.response.data.message ? error.response.data : error.message,
     });
   }
 };

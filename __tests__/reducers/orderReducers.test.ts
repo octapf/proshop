@@ -42,6 +42,7 @@ describe('orderReducers', () => {
         loading: false,
         success: false,
         error,
+        validationErrors: null,
       });
     });
   });
