@@ -74,7 +74,10 @@ export async function PUT(req: NextRequest, props: { params: Promise<{ id: strin
 
       const validation = userAdminUpdateSchema.safeParse(body);
       if (!validation.success) {
-        return NextResponse.json({ message: validation.error.errors[0].message }, { status: 400 });
+        return NextResponse.json(
+          { message: (validation.error as any).errors[0].message },
+          { status: 400 }
+        );
       }
 
       const { name, email, isAdmin } = validation.data;

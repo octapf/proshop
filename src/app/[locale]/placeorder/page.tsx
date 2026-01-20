@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 
 const PlaceOrderScreen = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   const cart = useSelector((state: any) => state.cart);
 
@@ -51,7 +51,6 @@ const PlaceOrderScreen = () => {
   }, [router, success]);
 
   const placeOrderHandler = () => {
-    // @ts-ignore
     dispatch(
       createOrder({
         orderItems: cart.cartItems,

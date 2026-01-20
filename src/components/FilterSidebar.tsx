@@ -11,7 +11,7 @@ const FilterSidebar = () => {
   const searchParams = useSearchParams();
 
   const productFilters = useSelector((state: any) => state.productFilters);
-  const { filters } = productFilters;
+  const { filters, loading } = productFilters;
 
   const [priceRange, setPriceRange] = useState([0, 1000]);
   const [selectedCategory, setSelectedCategory] = useState('');

@@ -35,7 +35,7 @@ export default function middleware(request: NextRequest) {
     pathname.includes('/api/users/login') ||
     (pathname.includes('/api/users') && request.method === 'POST')
   ) {
-    const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
+    const ip = (request as any).ip || request.headers.get('x-forwarded-for') || 'unknown';
 
     if (isRateLimited(ip)) {
       return NextResponse.json(

@@ -1,7 +1,13 @@
 import { NextResponse, NextRequest } from 'next/server';
-import path from 'path';
-import { writeFile } from 'fs/promises';
-import { existsSync, mkdirSync } from 'fs';
+import { v2 as cloudinary } from 'cloudinary';
+import { Readable } from 'stream';
+
+// Cloudinary config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function POST(req: NextRequest) {
   const formData = await req.formData();
@@ -29,39 +35,32 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const buffer = Buffer.from(await file.arrayBuffer());
-
-  // SANITIZATION: Strict filename sanitization
-  // 1. Get the original name
-  const originalName = file.name;
-  // 2. Get the extension
-  const ext = path.extname(originalName);
-  // 3. Get the base name without extension
-  const name = path.basename(originalName, ext);
-  // 4. Sanitize the base name (remove non-alphanumeric chars, replace spaces with underscores)
-  const sanitizedName = name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-  // 5. Add a timestamp to prevent overwrites and ensure uniqueness
-  const timestamp = Date.now();
-  const filename = `${sanitizedName}_${timestamp}${ext}`;
-
-  // Ensure uploads directory exists in public folder so it's accessible
-  const uploadDir = path.join(process.cwd(), 'public/uploads');
-  if (!existsSync(uploadDir)) {
-    mkdirSync(uploadDir, { recursive: true });
-  }
-
   try {
-    await writeFile(path.join(uploadDir, filename), buffer);
-    // Return resource URL
-    // NOTE: In Vercel usage, writing to filesystem at runtime doesn't persist forever (volatile).
-    // For production, S3 or Cloudinary is recommended.
-    // But for migration loyalty, this replicates local behavior.
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    const result: any = await new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        { folder: 'proshop' },
+        (error, result) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        }
+      );
+      // Convert buffer to stream and pipe to cloudinary
+      const stream = Readable.from(buffer);
+      stream.pipe(uploadStream);
+    });
+
     return NextResponse.json({
       message: 'Success',
-      filePath: `/uploads/${filename}`,
+      filePath: result.secure_url,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.log('Error occured ', error);
-    return NextResponse.json({ Message: 'Failed', status: 500 });
+    return NextResponse.json({ message: 'Upload failed', error: error.message }, { status: 500 });
   }
 }

@@ -60,7 +60,10 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
 
     const validation = productSchema.safeParse(body);
     if (!validation.success) {
-      return NextResponse.json({ message: validation.error.errors[0].message }, { status: 400 });
+      return NextResponse.json(
+        { message: (validation.error as any).errors[0].message },
+        { status: 400 }
+      );
     }
 
     const { name, price, description, image, brand, category, countInStock } = validation.data;
