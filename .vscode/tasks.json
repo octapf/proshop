@@ -1,16 +1,13 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"label": "install-legacy",
-			"type": "shell",
-			"command": "npm",
-			"args": [
-				"install",
-				"--legacy-peer-deps"
-			],
-			"isBackground": false,
-			"group": "build"
-		}
-	]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "install-legacy",
+      "type": "shell",
+      "command": "npm",
+      "args": ["install", "--legacy-peer-deps"],
+      "isBackground": false,
+      "group": "build"
+    }
+  ]
 }

@@ -4,90 +4,89 @@ import User from '@/models/userModel';
 import { protect } from '@/lib/authMiddleware';
 
 export async function DELETE(req: NextRequest, props: { params: Promise<{ id: string }> }) {
-    const params = await props.params;
-    await connectDB();
+  const params = await props.params;
+  await connectDB();
 
-    let user;
-    try {
-        user = await protect(req);
-    } catch (error: any) {
-        return NextResponse.json({ message: error.message }, { status: 401 });
-    }
+  let user;
+  try {
+    user = await protect(req);
+  } catch (error: any) {
+    return NextResponse.json({ message: error.message }, { status: 401 });
+  }
 
-    if (user && user.isAdmin) {
-        const { id } = await params;
-        const userToDelete = await User.findById(id);
+  if (user && user.isAdmin) {
+    const { id } = await params;
+    const userToDelete = await User.findById(id);
 
-        if (userToDelete) {
-             await userToDelete.deleteOne();
-             return NextResponse.json({ message: 'User removed' });
-        } else {
-            return NextResponse.json({ message: 'User not found' }, { status: 404 });
-        }
+    if (userToDelete) {
+      await userToDelete.deleteOne();
+      return NextResponse.json({ message: 'User removed' });
     } else {
-        return NextResponse.json({ message: 'Not authorized as an admin' }, { status: 401 });
+      return NextResponse.json({ message: 'User not found' }, { status: 404 });
     }
+  } else {
+    return NextResponse.json({ message: 'Not authorized as an admin' }, { status: 401 });
+  }
 }
 
 export async function GET(req: NextRequest, props: { params: Promise<{ id: string }> }) {
-    const params = await props.params;
-    await connectDB();
+  const params = await props.params;
+  await connectDB();
 
-    let user;
-    try {
-        user = await protect(req);
-    } catch (error: any) {
-        return NextResponse.json({ message: error.message }, { status: 401 });
-    }
+  let user;
+  try {
+    user = await protect(req);
+  } catch (error: any) {
+    return NextResponse.json({ message: error.message }, { status: 401 });
+  }
 
-    if (user && user.isAdmin) {
-        const { id } = await params;
-        const userFound = await User.findById(id).select('-password');
-        if (userFound) {
-            return NextResponse.json(userFound);
-        } else {
-            return NextResponse.json({ message: 'User not found' }, { status: 404 });
-        }
+  if (user && user.isAdmin) {
+    const { id } = await params;
+    const userFound = await User.findById(id).select('-password');
+    if (userFound) {
+      return NextResponse.json(userFound);
     } else {
-       return NextResponse.json({ message: 'Not authorized as an admin' }, { status: 401 });
+      return NextResponse.json({ message: 'User not found' }, { status: 404 });
     }
+  } else {
+    return NextResponse.json({ message: 'Not authorized as an admin' }, { status: 401 });
+  }
 }
 
 export async function PUT(req: NextRequest, props: { params: Promise<{ id: string }> }) {
-    const params = await props.params;
-    await connectDB();
+  const params = await props.params;
+  await connectDB();
 
-    let user;
-    try {
-        user = await protect(req);
-    } catch (error: any) {
-        return NextResponse.json({ message: error.message }, { status: 401 });
-    }
+  let user;
+  try {
+    user = await protect(req);
+  } catch (error: any) {
+    return NextResponse.json({ message: error.message }, { status: 401 });
+  }
 
-    if (user && user.isAdmin) {
-        const { id } = await params;
-        const userToUpdate = await User.findById(id);
-        
-        if (userToUpdate) {
-            const { name, email, isAdmin } = await req.json();
+  if (user && user.isAdmin) {
+    const { id } = await params;
+    const userToUpdate = await User.findById(id);
 
-            userToUpdate.name = name || userToUpdate.name;
-            userToUpdate.email = email || userToUpdate.email;
-            userToUpdate.isAdmin = isAdmin === undefined ? userToUpdate.isAdmin : isAdmin;
+    if (userToUpdate) {
+      const { name, email, isAdmin } = await req.json();
 
-            const updatedUser = await userToUpdate.save();
+      userToUpdate.name = name || userToUpdate.name;
+      userToUpdate.email = email || userToUpdate.email;
+      userToUpdate.isAdmin = isAdmin === undefined ? userToUpdate.isAdmin : isAdmin;
 
-            return NextResponse.json({
-                _id: updatedUser._id,
-                name: updatedUser.name,
-                email: updatedUser.email,
-                isAdmin: updatedUser.isAdmin,
-            });
-        } else {
-             return NextResponse.json({ message: 'User not found' }, { status: 404 });
-        }
+      const updatedUser = await userToUpdate.save();
 
+      return NextResponse.json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+      });
     } else {
-        return NextResponse.json({ message: 'Not authorized as an admin' }, { status: 401 });
+      return NextResponse.json({ message: 'User not found' }, { status: 404 });
     }
+  } else {
+    return NextResponse.json({ message: 'Not authorized as an admin' }, { status: 401 });
+  }
 }
